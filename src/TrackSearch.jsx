@@ -38,39 +38,38 @@ const TrackSearch = () => {
   }
 
   return (
-    <div>
-      <h1>SongSearch</h1>
-      <form onSubmit={searchTracks}>
+    <>
+      <h3>SongSearch</h3>
+      <form role="search" onSubmit={searchTracks}>
         <input
-          type="text"
+          type="search"
           placeholder="Search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button type="submit">Search</button>
-        {selectedTrackId ? (
-          <>
-            <p>Selected Track ID: {selectedTrackId}</p>
-            <button onClick={() => setSelectedTrackId('')}>Clear</button>
-          </>
-        ) : (
-          <div>
-            {tracks.map((track) => (
-              <div key={track.id}>
-                <img
-                  src={track.image}
-                  alt={track.title}
-                  onClick={() => setSelectedTrackId(track.id)}
-                />
-                <p>{track.artist}</p>
-                <p>{track.title}</p>
-                <p>{track.duration}</p>
-              </div>
-            ))}
-          </div>
-        )}
       </form>
-    </div>
+      {selectedTrackId && (
+        <>
+          <p>Selected Track ID: {selectedTrackId}</p>
+          <button onClick={() => setSelectedTrackId('')}>Clear</button>
+        </>
+      )}
+      <div>
+        {tracks.map((track) => (
+          <div key={track.id}>
+            <img
+              src={track.image}
+              alt={track.title}
+              onClick={() => setSelectedTrackId(track.id)}
+            />
+            <p>{track.artist}</p>
+            <p>{track.title}</p>
+            <p>{track.duration}</p>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 export default TrackSearch

@@ -1,0 +1,6 @@
+:root:not([data-theme='dark']),
+[data-theme='light'] {
+}
+
+:root[data-theme='dark'] {
+}

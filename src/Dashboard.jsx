@@ -18,16 +18,19 @@ function Dashboard({ code }) {
 
       const profile = await fetchProfile(accessToken)
       setProfile(profile)
-      window.history.pushState({}, null, '/')
+      // window.history.pushState({}, null, '/')
     })()
   }, [code])
 
   return (
-    <>
-      <h1>Display your Spotify profile data</h1>
-      {profile ? <Profile profile={profile} /> : <p>Loading...</p>}
+    <header className="container">
+      {profile ? (
+        <Profile profile={profile} />
+      ) : (
+        <article aria-busy="true"></article>
+      )}
       {profile && <TrackSearch />}
-    </>
+    </header>
   )
 }
 export default Dashboard
