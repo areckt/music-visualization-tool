@@ -6,9 +6,20 @@ export const useGlobalContext = () => useContext(GlobalContext)
 
 const AppContext = ({ children }) => {
   const [selectedTrackId, setSelectedTrackId] = useState('')
+  const [trackAudioFeatures, setTrackAudioFeatures] = useState()
+  const [trackAudioAnalysis, setTrackAudioAnalysis] = useState()
 
   return (
-    <GlobalContext.Provider value={{ selectedTrackId, setSelectedTrackId }}>
+    <GlobalContext.Provider
+      value={{
+        selectedTrackId,
+        setSelectedTrackId,
+        trackAudioFeatures,
+        setTrackAudioFeatures,
+        trackAudioAnalysis,
+        setTrackAudioAnalysis,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { fetchTracks, fetchUserTopTracks } from './spotifyAPI.js'
-import { formatDuration, mapTracks } from './utils.js'
+import { mapTracks } from './utils.js'
 import { useGlobalContext } from './context.jsx'
 import styled from 'styled-components'
 
@@ -10,12 +10,16 @@ const TrackSearch = () => {
   const { selectedTrackId, setSelectedTrackId } = useGlobalContext()
 
   useEffect(() => {
-    let accessToken = localStorage.getItem('accessToken')
+    const accessToken = localStorage.getItem('accessToken')
     ;(async () => {
       const result = await fetchUserTopTracks(accessToken)
       const tracks = mapTracks(result.items)
       setTracks(tracks)
     })()
+
+    return () => {
+      setSelectedTrackId('')
+    }
   }, [])
 
   const searchTracks = async (e) => {
@@ -23,7 +27,7 @@ const TrackSearch = () => {
     setSelectedTrackId('')
     if (!search) return setTracks([])
 
-    let accessToken = localStorage.getItem('accessToken')
+    const accessToken = localStorage.getItem('accessToken')
     const result = await fetchTracks(accessToken, search)
     const tracks = mapTracks(result.tracks.items)
     setTracks(tracks)

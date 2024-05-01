@@ -97,6 +97,46 @@ export async function fetchUserTopTracks(token) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    // window.location = '/'
+    window.location = '/'
+  }
+}
+
+export async function fetchTrackAudioFeatures(token, trackId) {
+  try {
+    const result = await fetch(
+      `https://api.spotify.com/v1/audio-features/${trackId}`,
+      {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    if (result.status !== 200) {
+      localStorage.removeItem('accessToken')
+      throw new Error("Failed to fetch track's audio features")
+    }
+    return await result.json()
+  } catch (error) {
+    console.error(error)
+    window.location = '/'
+  }
+}
+
+export async function fetchTrackAudioAnalysis(token, trackId) {
+  try {
+    const result = await fetch(
+      `https://api.spotify.com/v1/audio-analysis/${trackId}`,
+      {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    if (result.status !== 200) {
+      localStorage.removeItem('accessToken')
+      throw new Error("Failed to fetch track's audio analysis")
+    }
+    return await result.json()
+  } catch (error) {
+    console.error(error)
+    window.location = '/'
   }
 }

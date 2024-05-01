@@ -8,3 +8,7 @@
   --v-card-hover-background-color: hsl(222, 21%, 21%);
   --v-card-active-background-color: hsl(201, 99%, 21%);
 }
+
+* {
+  scroll-behavior: smooth;
+}

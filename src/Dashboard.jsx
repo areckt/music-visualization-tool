@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react'
 import { getAccessToken, fetchProfile } from './spotifyAPI'
 import Profile from './Profile'
 import TrackSearch from './TrackSearch'
+import { useGlobalContext } from './context'
+import MainContent from './MainContent'
 
 function Dashboard({ code }) {
   const [accessToken, setAccessToken] = useState()
   const [profile, setProfile] = useState()
+  const { selectedTrackId } = useGlobalContext()
 
   useEffect(() => {
     ;(async () => {
@@ -23,14 +26,17 @@ function Dashboard({ code }) {
   }, [code])
 
   return (
-    <header className="container">
-      {profile ? (
-        <Profile profile={profile} />
-      ) : (
-        <article aria-busy="true"></article>
-      )}
-      {profile && <TrackSearch />}
-    </header>
+    <>
+      <header className="container">
+        {profile ? (
+          <Profile profile={profile} />
+        ) : (
+          <article aria-busy="true"></article>
+        )}
+        {profile && <TrackSearch />}
+      </header>
+      {selectedTrackId && <MainContent />}
+    </>
   )
 }
 export default Dashboard
