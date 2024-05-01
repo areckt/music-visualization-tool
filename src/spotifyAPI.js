@@ -12,7 +12,7 @@ export async function redirectToAuthCodeFlow() {
   params.append('client_id', clientId)
   params.append('response_type', 'code')
   params.append('redirect_uri', 'http://localhost:5173/callback')
-  params.append('scope', 'user-read-private user-read-email')
+  params.append('scope', 'user-read-private user-read-email user-top-read')
   params.append('code_challenge_method', 'S256')
   params.append('code_challenge', challenge)
 
@@ -64,7 +64,7 @@ export async function fetchProfile(token) {
   }
 }
 
-export async function fetchSongs(token, searchQuery) {
+export async function fetchTracks(token, searchQuery) {
   try {
     const result = await fetch(
       `https://api.spotify.com/v1/search?q=${searchQuery}&type=track`,
@@ -75,11 +75,28 @@ export async function fetchSongs(token, searchQuery) {
     )
     if (result.status !== 200) {
       localStorage.removeItem('accessToken')
-      throw new Error('Failed to fetch songs')
+      throw new Error('Failed to fetch tracks')
     }
     return await result.json()
   } catch (error) {
     console.error(error)
     window.location = '/'
+  }
+}
+
+export async function fetchUserTopTracks(token) {
+  try {
+    const result = await fetch('https://api.spotify.com/v1/me/top/tracks', {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (result.status !== 200) {
+      localStorage.removeItem('accessToken')
+      throw new Error("Failed to fetch user's top tracks")
+    }
+    return await result.json()
+  } catch (error) {
+    console.error(error)
+    // window.location = '/'
   }
 }

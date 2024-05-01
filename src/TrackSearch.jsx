@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { fetchSongs } from './spotifyAPI.js'
-import { formatDuration } from './utils.js'
+import { useState, useEffect } from 'react'
+import { fetchTracks, fetchUserTopTracks } from './spotifyAPI.js'
+import { formatDuration, mapTracks } from './utils.js'
 import { useGlobalContext } from './context.jsx'
 import styled from 'styled-components'
 
@@ -9,32 +9,23 @@ const TrackSearch = () => {
   const [tracks, setTracks] = useState([])
   const { selectedTrackId, setSelectedTrackId } = useGlobalContext()
 
+  useEffect(() => {
+    let accessToken = localStorage.getItem('accessToken')
+    ;(async () => {
+      const result = await fetchUserTopTracks(accessToken)
+      const tracks = mapTracks(result.items)
+      setTracks(tracks)
+    })()
+  }, [])
+
   const searchTracks = async (e) => {
     e.preventDefault()
     setSelectedTrackId('')
     if (!search) return setTracks([])
 
     let accessToken = localStorage.getItem('accessToken')
-    const result = await fetchSongs(accessToken, search)
-
-    const tracks = result.tracks.items.map((track) => {
-      const albumImage = track.album.images.reduce((img300, image) => {
-        if (image.height == 300) return image
-        return img300
-      }, track.album.images[0])
-
-      const duration = formatDuration(track.duration_ms)
-
-      return {
-        artist: track.artists[0].name,
-        title: track.name,
-        id: track.id,
-        image: albumImage.url,
-        durationMs: track.duration_ms,
-        duration: duration,
-      }
-    })
-
+    const result = await fetchTracks(accessToken, search)
+    const tracks = mapTracks(result.tracks.items)
     setTracks(tracks)
   }
 

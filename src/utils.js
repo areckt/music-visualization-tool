@@ -38,3 +38,24 @@ export function logout() {
   localStorage.removeItem('accessToken')
   window.location = '/'
 }
+
+export function mapTracks(tracks) {
+  const mappedTracks = tracks.map((track) => {
+    const albumImage = track.album.images.reduce((img300, image) => {
+      if (image.height == 300) return image
+      return img300
+    }, track.album.images[0])
+
+    const duration = formatDuration(track.duration_ms)
+
+    return {
+      artist: track.artists[0].name,
+      title: track.name,
+      id: track.id,
+      image: albumImage.url,
+      durationMs: track.duration_ms,
+      duration: duration,
+    }
+  })
+  return mappedTracks
+}
