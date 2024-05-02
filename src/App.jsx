@@ -1,9 +1,8 @@
-import Dashboard from './Dashboard'
-import Login from './Login'
-import './pico.min.css'
-import './App.css'
+import Dashboard from './components/Dashboard'
+import Login from './components/Login'
+import './styles/pico.min.css'
+import './styles/App.css'
 
-const clientId = 'c1daea0e75e94a118efba6aad50a9177'
 const params = new URLSearchParams(window.location.search)
 const code = params.get('code')
 

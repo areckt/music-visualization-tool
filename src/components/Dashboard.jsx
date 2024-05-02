@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { getAccessToken, fetchProfile } from './spotifyAPI'
+import { getAccessToken, fetchProfile } from '../utils/spotifyAPI'
 import Profile from './Profile'
 import TrackSearch from './TrackSearch'
-import { useGlobalContext } from './context'
+import { useGlobalContext } from '../context'
 import MainContent from './MainContent'
 
 function Dashboard({ code }) {

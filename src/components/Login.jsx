@@ -1,4 +1,4 @@
-import { redirectToAuthCodeFlow } from './spotifyAPI'
+import { redirectToAuthCodeFlow } from '../utils/spotifyAPI'
 
 const Login = () => {
   return (

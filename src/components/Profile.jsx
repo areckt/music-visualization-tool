@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import userAvatar from './assets/user-avatar.png'
-import { logout, toggleTheme } from './utils'
+import userAvatar from '../assets/user-avatar.png'
+import { logout, toggleTheme } from '../utils/utils'
 
 const Profile = ({ profile }) => {
   const { display_name, images } = profile

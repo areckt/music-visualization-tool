@@ -47,9 +47,10 @@ export function mapTracks(tracks) {
     }, track.album.images[0])
 
     const duration = formatDuration(track.duration_ms)
+    const artists = track.artists.map((artist) => artist.name).join(', ')
 
     return {
-      artist: track.artists[0].name,
+      artist: artists,
       title: track.name,
       id: track.id,
       image: albumImage.url,

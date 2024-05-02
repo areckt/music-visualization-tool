@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { fetchTracks, fetchUserTopTracks } from './spotifyAPI.js'
-import { mapTracks } from './utils.js'
-import { useGlobalContext } from './context.jsx'
+import { fetchTracks, fetchUserTopTracks } from '../utils/spotifyAPI.js'
+import { mapTracks } from '../utils/utils.js'
+import { useGlobalContext } from '../context.jsx'
 import styled from 'styled-components'
 
 const TrackSearch = () => {
@@ -77,8 +77,8 @@ const TrackSearchStyled = styled.article`
   .track-list {
     display: flex;
     gap: 0.5rem;
-    overflow-x: scroll;
     padding-bottom: 0.75rem;
+    overflow-x: scroll;
 
     .track {
       background-color: var(--pico-form-element-background-color);

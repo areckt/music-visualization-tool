@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
-import { useGlobalContext } from './context'
-import { fetchTrackAudioAnalysis, fetchTrackAudioFeatures } from './spotifyAPI'
+import { useGlobalContext } from '../context'
+import {
+  fetchTrackAudioAnalysis,
+  fetchTrackAudioFeatures,
+} from '../utils/spotifyAPI'
 
 const MainContent = () => {
   const { selectedTrackId, setTrackAudioFeatures, setTrackAudioAnalysis } =
