@@ -7,7 +7,8 @@ const params = new URLSearchParams(window.location.search)
 const code = params.get('code')
 
 const root = document.documentElement
-root.setAttribute('data-theme', 'light')
+const theme = localStorage.getItem('theme') || 'light'
+root.setAttribute('data-theme', theme)
 
 function App() {
   return code ? <Dashboard code={code} /> : <Login />

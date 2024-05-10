@@ -1,6 +1,6 @@
 import Matrix from './dataStructures/Matrix'
 
-export function generate1DGaussianKernel(size, sigma = size / 2) {
+export function generate1DgaussianKernel(size, sigma = size / 2) {
   const kernel = new Float32Array(size)
   const meanIndex = (size - 1) / 2
   let sum = 0 // For accumulating the kernel values
@@ -35,7 +35,7 @@ export function generate1DlinearKernel(size) {
 }
 
 export function linearBlur2DOptimized(matrix, size) {
-  log.debug('Performing 2D linear', size)
+  console.log('Performing 2D linear', size)
   const matrixSize = matrix.getSize()
   const fullKernelSize = size * 2 + 1
   const kernel1D = generate1DlinearKernel(fullKernelSize)
@@ -230,7 +230,7 @@ export function splitGaussianBlurFeatures(features, size, offset = 0) {
 
 export function gaussianBlur1D(array, size, edgeStrategy = 'zeroPad') {
   const fullKernelSize = size * 2 + 1
-  const kernel = generate1DGaussianKernel(fullKernelSize, size / 2)
+  const kernel = generate1DgaussianKernel(fullKernelSize, size / 2)
   const blurredArray = new Float32Array(array.length)
 
   for (let i = 0; i < array.length; i++) {

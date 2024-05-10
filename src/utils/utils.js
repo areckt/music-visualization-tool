@@ -30,7 +30,9 @@ export function formatDuration(milliseconds) {
 export function toggleTheme() {
   const root = document.documentElement
   const theme = root.getAttribute('data-theme')
-  root.setAttribute('data-theme', theme === 'light' ? 'dark' : 'light')
+  const newTheme = theme === 'light' ? 'dark' : 'light'
+  root.setAttribute('data-theme', newTheme)
+  localStorage.setItem('theme', newTheme)
 }
 
 export function logout() {
@@ -50,13 +52,30 @@ export function mapTracks(tracks) {
     const artists = track.artists.map((artist) => artist.name).join(', ')
 
     return {
-      artist: artists,
-      title: track.name,
-      id: track.id,
+      ...track,
+      artists: artists,
       image: albumImage.url,
-      durationMs: track.duration_ms,
       duration: duration,
     }
   })
   return mappedTracks
+}
+
+// Simple implementation of lodash.cloneDeep
+// Does not clone functions or handle recursive references.
+export function cloneDeep(original) {
+  if (original instanceof RegExp) {
+    return new RegExp(original)
+  } else if (original instanceof Date) {
+    return new Date(original.getTime())
+  } else if (Array.isArray(original)) {
+    return original.map(cloneDeep)
+  } else if (typeof original === 'object' && original !== null) {
+    const clone = {}
+    Object.keys(original).forEach((k) => {
+      clone[k] = cloneDeep(original[k])
+    })
+    return clone
+  }
+  return original
 }

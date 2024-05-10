@@ -6,6 +6,7 @@ export const useGlobalContext = () => useContext(GlobalContext)
 
 const AppContext = ({ children }) => {
   const [selectedTrackId, setSelectedTrackId] = useState('')
+  const [trackData, setTrackData] = useState()
   const [trackAudioFeatures, setTrackAudioFeatures] = useState()
   const [trackAudioAnalysis, setTrackAudioAnalysis] = useState()
 
@@ -14,6 +15,8 @@ const AppContext = ({ children }) => {
       value={{
         selectedTrackId,
         setSelectedTrackId,
+        trackData,
+        setTrackData,
         trackAudioFeatures,
         setTrackAudioFeatures,
         trackAudioAnalysis,

@@ -3,11 +3,13 @@ import { fetchTracks, fetchUserTopTracks } from '../utils/spotifyAPI.js'
 import { mapTracks } from '../utils/utils.js'
 import { useGlobalContext } from '../context.jsx'
 import styled from 'styled-components'
+// import { init } from '../utils/workers/workers.js'
 
 const TrackSearch = () => {
   const [search, setSearch] = useState('')
   const [tracks, setTracks] = useState([])
-  const { selectedTrackId, setSelectedTrackId } = useGlobalContext()
+  const { selectedTrackId, setSelectedTrackId, setTrackData } =
+    useGlobalContext()
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')
@@ -16,6 +18,8 @@ const TrackSearch = () => {
       const tracks = mapTracks(result.items)
       setTracks(tracks)
     })()
+
+    // init().then(() => console.log('Workers initialized'))
 
     return () => {
       setSelectedTrackId('')
@@ -31,6 +35,12 @@ const TrackSearch = () => {
     const result = await fetchTracks(accessToken, search)
     const tracks = mapTracks(result.tracks.items)
     setTracks(tracks)
+  }
+
+  const handleSelectTrack = (track) => {
+    console.log(track)
+    setTrackData(track)
+    setSelectedTrackId(track.id)
   }
 
   return (
@@ -50,14 +60,14 @@ const TrackSearch = () => {
           <div
             className={`track ${selectedTrackId == track.id ? 'active' : ''}`}
             key={track.id}
-            onClick={() => setSelectedTrackId(track.id)}
+            onClick={() => handleSelectTrack(track)}
           >
-            <img src={track.image} alt={track.title} />
+            <img src={track.image} alt={track.name} />
             <div className="track-data">
               <p className="title">
-                <b>{track.title}</b>
+                <b>{track.name}</b>
               </p>
-              <p className="artist">{track.artist}</p>
+              <p className="artist">{track.artists}</p>
               <p className="duration">{track.duration}</p>
             </div>
           </div>
