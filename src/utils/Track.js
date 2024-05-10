@@ -74,9 +74,12 @@ export default class Track {
   clusters = []
   clusterSections
 
-  constructor(trackData, analysisData) {
+  setStructure
+
+  constructor(trackData, analysisData, setStructure) {
     this.trackData = trackData
     this.analysisData = analysisData
+    this.setStructure = setStructure
     // console.log('global TEST: ', typeof global)
     // console.log('numeric TEST: ', numeric)
     // console.log('numeric TEST: ', numeric.pow([3], 3))
@@ -153,6 +156,7 @@ export default class Track {
 
     console.log('Final harmonicStructure: ', result.harmonicStructure)
     this.harmonicStructureCourse = result.harmonicStructure
+    this.setStructure(this.harmonicStructureCourse)
 
     await obj[releaseProxy]()
     worker.terminate()
@@ -161,5 +165,8 @@ export default class Track {
   // GETTERS
   getName() {
     return this.trackData.name
+  }
+  getAnalysisDuration() {
+    return this.analysisData.track.duration
   }
 }

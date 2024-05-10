@@ -28,7 +28,7 @@ export function calculateSSM(
     } else if (similarityFunction === 'euclidean') {
       const val = sim.euclidianPitchTransposed(features[x], features[y], f)
       if (val < 0 || val > 1) {
-        console.log(x, y, val, features[x], features[y])
+        // console.log(x, y, val, features[x], features[y])
       }
       return (
         Math.max(
