@@ -56,26 +56,37 @@ const obj = {
       strategy = 'Classic'
     ) => {
       // console.log('HarmonicsStructure', harmonicStructure)
-      const sortedHarmonicStructureMDS = colorHarmonicStructure(
-        harmonicStructure,
-        strictPathMatrix,
-        strategy
-      )
+      let finalHarmonicStructure = harmonicStructure
 
-      sortedHarmonicStructureMDS.forEach((section) => {
-        const startInSamples = Math.floor(
-          section.start / options.sampleDuration
+      try {
+        finalHarmonicStructure = colorHarmonicStructure(
+          harmonicStructure,
+          strictPathMatrix,
+          strategy
         )
-        const endInSamples = Math.floor(section.end / options.sampleDuration)
-        const key = keyDetection.detect(
-          options.pitchFeatures,
-          startInSamples,
-          endInSamples
+      } catch (error) {
+        console.warn(
+          'There was an error updating the structure: ',
+          error,
+          '\nThe final harmonic structure is: ',
+          finalHarmonicStructure
         )
-        section.key = key
-      })
+      } finally {
+        finalHarmonicStructure.forEach((section) => {
+          const startInSamples = Math.floor(
+            section.start / options.sampleDuration
+          )
+          const endInSamples = Math.floor(section.end / options.sampleDuration)
+          const key = keyDetection.detect(
+            options.pitchFeatures,
+            startInSamples,
+            endInSamples
+          )
+          section.key = key
+        })
 
-      return { state, harmonicStructure: sortedHarmonicStructureMDS }
+        return { state, harmonicStructure: finalHarmonicStructure }
+      }
     }
 
     let [harmonicStructure, mutorGroupAmount, segmentsMutor] =

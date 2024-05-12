@@ -172,7 +172,8 @@ export function svd(A) {
         }
         break //break out of iteration loop and move on to next k value
       }
-      if (iteration >= itmax - 1) throw 'Error: no convergence.'
+      if (iteration > itmax - 1)
+        throw new Error('numeric.js, svd(): no convergence')
       // shift from bottom 2x2 minor
       x = q[l]
       y = q[k - 1]
