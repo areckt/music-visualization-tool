@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import * as vis from '../../utils/vis'
 import { useGlobalContext } from '../../context'
 
-const Section = ({
+const HarmonicStructureSection = ({
   section,
   height,
   scale,
@@ -177,7 +177,7 @@ const Section = ({
   }
 
   return (
-    <StyledSection $sectionColor={color}>
+    <HarmonicStructureSectionStyled $sectionColor={color}>
       <defs>
         <linearGradient
           id={`glowRectGradient${section.start}${section.end}`}
@@ -208,11 +208,11 @@ const Section = ({
         d={shapedSectionPath()}
         fill={color}
       ></path>
-    </StyledSection>
+    </HarmonicStructureSectionStyled>
   )
 }
 
-const StyledSection = styled.g`
+const HarmonicStructureSectionStyled = styled.g`
   .shapedSection {
     z-index: 10;
     pointer-events: all;
@@ -235,4 +235,4 @@ const StyledSection = styled.g`
   }
 `
 
-export default Section
+export default HarmonicStructureSection

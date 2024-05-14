@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from 'react'
 import { useGlobalContext } from '../context'
-import Structure from './visualizations/Structure'
+import HarmonicStructure from './visualizations/HarmonicStructure'
 import {
   fetchTrackAudioAnalysis,
   fetchTrackAudioFeatures,
 } from '../utils/spotifyAPI'
 import Track from '../utils/Track'
 import { debounce } from '../utils/utils'
+import TimbreStructure from './visualizations/TimbreStructure'
 
 const MainContent = () => {
   const {
@@ -16,8 +17,10 @@ const MainContent = () => {
     setTrackAudioAnalysis,
     trackObject,
     setTrackObject,
-    structure,
-    setStructure,
+    harmonicStructure,
+    setHarmonicStructure,
+    timbreStructure,
+    setTimbreStructure,
   } = useGlobalContext()
 
   const headerRef = useRef(null)
@@ -54,7 +57,12 @@ const MainContent = () => {
       setTrackAudioAnalysis(trackAudioAnalysis)
       console.log('Audio Analysis: ', trackAudioAnalysis)
 
-      const track = new Track(trackData, trackAudioAnalysis, setStructure)
+      const track = new Track(
+        trackData,
+        trackAudioAnalysis,
+        setHarmonicStructure,
+        setTimbreStructure
+      )
       setTrackObject(track)
     })()
 
@@ -69,8 +77,11 @@ const MainContent = () => {
     <main className="container">
       <article>
         <h3 ref={headerRef}>Visualizations</h3>
-        {trackObject && structure && (
-          <Structure structure={structure} width={width} />
+        {trackObject && harmonicStructure && (
+          <HarmonicStructure structure={harmonicStructure} width={width} />
+        )}
+        {trackObject && timbreStructure && (
+          <TimbreStructure structure={timbreStructure} width={width} />
         )}
       </article>
     </main>

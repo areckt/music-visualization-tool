@@ -3,7 +3,8 @@ import * as filter from './filter'
 import * as noveltyDetection from './noveltyDetection'
 import * as structure from './structure'
 import { releaseProxy, wrap } from 'comlink'
-import Worker from './workers/harmonicStructureWorker?worker'
+import HarmonicStructureWorker from './workers/harmonicStructureWorker?worker'
+import TimbreStructureWorker from './workers/timbreStructureWorker?worker'
 
 export const GAMMA = 1.7
 export const CLUSTERAMOUNT = 10
@@ -74,16 +75,20 @@ export default class Track {
   clusters = []
   clusterSections
 
-  setStructure
+  setHarmonicStructure
+  setTimbreStructure
 
-  constructor(trackData, analysisData, setStructure) {
+  constructor(
+    trackData,
+    analysisData,
+    setHarmonicStructure,
+    setTimbreStructure
+  ) {
     this.trackData = trackData
     this.analysisData = analysisData
-    this.setStructure = setStructure
-    // console.log('global TEST: ', typeof global)
-    // console.log('numeric TEST: ', numeric)
-    // console.log('numeric TEST: ', numeric.pow([3], 3))
-    // console.log('numeric TEST 2: ', numeric.pow(3, 3))
+    this.setHarmonicStructure = setHarmonicStructure
+    this.setTimbreStructure = setTimbreStructure
+
     this.process()
   }
 
@@ -138,13 +143,14 @@ export default class Track {
     console.log('this.features', this.features)
 
     this.computeHarmonicStructure()
+    this.computeTimbreStructure()
 
     this.processed = true
     this.processing = false
   }
 
   async computeHarmonicStructure() {
-    const worker = new Worker()
+    const worker = new HarmonicStructureWorker()
     const obj = wrap(worker)
     const result = await obj.computeHarmonicStructure({
       pitchFeatures: this.features.sampled.pitches,
@@ -156,7 +162,25 @@ export default class Track {
 
     console.log('Final harmonicStructure: ', result.harmonicStructure)
     this.harmonicStructureCourse = result.harmonicStructure
-    this.setStructure(this.harmonicStructureCourse)
+    this.setHarmonicStructure(this.harmonicStructureCourse)
+
+    await obj[releaseProxy]()
+    worker.terminate()
+  }
+
+  async computeTimbreStructure() {
+    const worker = new TimbreStructureWorker()
+    const obj = wrap(worker)
+    const result = await obj.computeTimbreStructure(
+      this.features.sampled.timbres,
+      this.features.sampleDuration
+    )
+
+    console.log('Final timbre structure: ', result)
+    this.timbreStructure = result.timbreStructure
+    this.events = result.events
+    this.segmentedTimbreGraph = result.segmentedTimbreGraph
+    this.setTimbreStructure(this.segmentedTimbreGraph)
 
     await obj[releaseProxy]()
     worker.terminate()

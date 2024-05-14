@@ -1,33 +1,38 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import Section from './Section'
 import { useGlobalContext } from '../../context'
+import { style } from 'd3'
+import * as vis from '../../utils/vis'
+import TimbreStructureSection from './TimbreStructureSection'
 
-const Structure = ({ structure, width }) => {
-  const SECTION_HEIGHT = 40
+const TimbreStructure = ({ structure, width }) => {
+  const SECTION_HEIGHT = 45
   const PADDING_TOP = 10
+  const GRADIENT_STEP_AMOUNT = 8
+  const HEIGHT = 200
   const [showLoudness, setShowLoudness] = useState(true)
-  const [catColoring, setCatColoring] = useState(false)
   const [showDescription, setShowDescription] = useState(false)
 
   const { trackObject } = useGlobalContext()
 
   const scale = width / trackObject.getAnalysisDuration()
 
-  const groupAmount = () => {
-    return (
-      structure.reduce((max, val) => {
-        return val.groupID > max ? val.groupID : max
-      }, 0) + 1
-    )
+  const gradientSteps = () => {
+    let steps = []
+    for (let i = 0; i < GRADIENT_STEP_AMOUNT; i++) {
+      steps.push(i / GRADIENT_STEP_AMOUNT)
+    }
+    return steps
   }
 
-  const height = groupAmount() * SECTION_HEIGHT + 20
+  const color = (mdsFeature) => {
+    return vis.sinebowColorNormalizedRadius(mdsFeature, 1, 1)
+  }
 
   return (
-    <StructureStyled className="pt-5">
+    <TimbreStructureStyled>
       <div className="visualizationHeader">
-        <h4>Structure</h4>
+        <h4>Timbre</h4>
         <div className="buttons">
           <span
             role="button"
@@ -43,18 +48,6 @@ const Structure = ({ structure, width }) => {
           </span>
           <span
             role="button"
-            className={catColoring ? 'off' : 'on'}
-            onClick={() => setCatColoring(!catColoring)}
-            data-tooltip={
-              catColoring
-                ? 'Colors show similarity between groups'
-                : 'Colors show similarity within a group'
-            }
-          >
-            <span className="material-icons">palette</span>
-          </span>
-          <span
-            role="button"
             className={showDescription ? 'on' : 'off'}
             onClick={() => setShowDescription(!showDescription)}
             data-tooltip="Toggle description"
@@ -64,41 +57,52 @@ const Structure = ({ structure, width }) => {
         </div>
       </div>
       <div
-        id="description"
-        className={showDescription ? 'showDescription' : ''}
+        className={
+          showDescription ? 'description showDescription' : 'description'
+        }
       >
         <p>
-          This visualization shows section blocks, where each row (group) of
-          blocks represents a repeating harmonic sequence. For example, in many
-          songs a section block will represent a repeated chord progression that
-          could correspond to the song's chorus. The{' '}
+          This visualization shows timbre in the form of a segmented graph. The
+          vertical axis and its color denote similarity. The higher the section,
+          the more "energy" and "brightness" of the music it corresponds to. A
+          sudden change in timbre will show up as a break in the graph. The{' '}
           <span className="material-icons">equalizer</span> button toggles the
-          embedding of loudness in the visualization. The{' '}
-          <span className="material-icons">palette</span> button switches colors
-          to show either the harmonic sequential similarity within a group, or
-          between the groups.
+          embedding of loudness in the visualization. <br />
+          The dots shown below the graph are moments of timbral anomaly, points
+          in the music where the timbre is unique and locally distinct.
         </p>
       </div>
-      <svg className="structureSVG" width={width} height={height}>
+      <svg className="timbreStructureSVG" width={width} height={HEIGHT}>
+        <defs>
+          <linearGradient id="pathGradient" x1="0" x2="0" y="0" y2="1">
+            {gradientSteps().map((gradientStep) => (
+              <stop
+                key={gradientStep}
+                offset={`${gradientStep}`}
+                style={{ stopColor: color(1 - gradientStep), stopOpacity: 1 }}
+              />
+            ))}
+          </linearGradient>
+        </defs>
         {structure.map((section, index) => (
-          <Section
-            className="structureSection"
-            key={index + 'course'}
+          <TimbreStructureSection
+            key={index + 'timbre'}
             section={section}
             height={SECTION_HEIGHT}
             scale={scale}
-            verticalOffset={PADDING_TOP}
             showLoudness={showLoudness}
-            coloring={catColoring ? 'categoricalMDS' : 'circular'}
+            verticalOffset={PADDING_TOP}
+            containerHeight={HEIGHT}
           />
         ))}
       </svg>
-    </StructureStyled>
+    </TimbreStructureStyled>
   )
 }
-export default Structure
 
-const StructureStyled = styled.div`
+export default TimbreStructure
+
+const TimbreStructureStyled = styled.div`
   .visualizationHeader {
     display: flex;
     justify-content: space-between;
@@ -131,7 +135,7 @@ const StructureStyled = styled.div`
       }
     }
   }
-  #description {
+  .description {
     max-height: 0px;
     overflow: clip;
     transition: max-height 0.2s ease-in-out;
