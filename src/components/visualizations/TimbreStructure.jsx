@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
-import { style } from 'd3'
 import * as vis from '../../utils/vis'
 import TimbreStructureSection from './TimbreStructureSection'
+import TimbreStructureEvents from './TimbreStructureEvents'
 
 const TimbreStructure = ({ structure, width }) => {
   const SECTION_HEIGHT = 45
@@ -84,7 +84,7 @@ const TimbreStructure = ({ structure, width }) => {
             ))}
           </linearGradient>
         </defs>
-        {structure.map((section, index) => (
+        {structure.timbreStructure.map((section, index) => (
           <TimbreStructureSection
             key={index + 'timbre'}
             section={section}
@@ -96,6 +96,7 @@ const TimbreStructure = ({ structure, width }) => {
           />
         ))}
       </svg>
+      <TimbreStructureEvents events={structure.events} width={width} />
     </TimbreStructureStyled>
   )
 }

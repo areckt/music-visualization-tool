@@ -51,7 +51,7 @@ export function color(events) {
     const [angle, radius] = mds.getAngleAndRadius(MdsCoordinates[index])
     event.colorAngle = angle
     event.colorRadius = radius
-    event.mdsFeature = MdsFeature[index]
+    event.mdsFeature = MdsFeature[index] || 0.5
   })
 }
 

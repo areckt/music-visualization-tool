@@ -88,17 +88,6 @@ const obj = {
       sampleDuration
     )
 
-    const smoothedTimbreFeatures = filter.gaussianBlurFeatures(
-      timbreFeatures,
-      4
-    )
-    const eventArray = events.detectAverageWindow(
-      smoothedTimbreFeatures,
-      sampleDuration,
-      60,
-      0.6
-    )
-
     const newEvents = events.computeEvents(timbreFeatures, sampleDuration)
 
     return {
@@ -112,17 +101,6 @@ const obj = {
 function calculateSegmentedTimbreGraph(features, sampleDuration) {
   const segmentationSmoothingLength = Math.round(5)
   const continuousSmoothingLength = Math.round(10)
-
-  const ssmTimbre = SSM.calculateSSM(
-    features,
-    sampleDuration,
-    false,
-    0,
-    'cosine'
-  )
-  const blurredTimbreLarge = filter.gaussianBlur2DOptimized(ssmTimbre, 5)
-  const timbreNoveltyColumn =
-    noveltyDetection.absoluteEuclideanColumnDerivative(blurredTimbreLarge)
 
   const segmentationSmoothedFeatures = filter.gaussianBlurFeatures(
     features,

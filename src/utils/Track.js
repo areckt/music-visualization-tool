@@ -180,7 +180,10 @@ export default class Track {
     this.timbreStructure = result.timbreStructure
     this.events = result.events
     this.segmentedTimbreGraph = result.segmentedTimbreGraph
-    this.setTimbreStructure(this.segmentedTimbreGraph)
+    this.setTimbreStructure({
+      timbreStructure: this.segmentedTimbreGraph,
+      events: this.events,
+    })
 
     await obj[releaseProxy]()
     worker.terminate()

@@ -487,9 +487,9 @@ function classicalMDS(distances, dimensions) {
 export function getAngleAndRadius(mdsCoordinate) {
   const x = mdsCoordinate[0]
   const y = mdsCoordinate[1]
-  let angle = Math.atan2(y, x) / (2 * Math.PI)
+  let angle = Math.atan2(y, x) / (2 * Math.PI) || 0.5
   angle = angle < 0 ? 1 + angle : angle
-  const radius = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+  const radius = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)) || 0.5
   return [angle, radius]
 }
 
