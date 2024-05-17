@@ -12,6 +12,7 @@ const AppContext = ({ children }) => {
   const [trackObject, setTrackObject] = useState()
   const [harmonicStructure, setHarmonicStructure] = useState()
   const [timbreStructure, setTimbreStructure] = useState()
+  const [chordsFeatures, setChordsFeatures] = useState()
 
   return (
     <GlobalContext.Provider
@@ -30,6 +31,8 @@ const AppContext = ({ children }) => {
         setHarmonicStructure,
         timbreStructure,
         setTimbreStructure,
+        chordsFeatures,
+        setChordsFeatures,
       }}
     >
       {children}

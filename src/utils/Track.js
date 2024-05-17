@@ -5,6 +5,7 @@ import * as structure from './structure'
 import { releaseProxy, wrap } from 'comlink'
 import HarmonicStructureWorker from './workers/harmonicStructureWorker?worker'
 import TimbreStructureWorker from './workers/timbreStructureWorker?worker'
+import ChordsWorker from './workers/chordsWorker?worker'
 
 export const GAMMA = 1.7
 export const CLUSTERAMOUNT = 10
@@ -67,9 +68,6 @@ export default class Track {
 
   features
 
-  processed = false
-  processing = false
-
   smoothedTimbre = []
   tsneCoords = []
   clusters = []
@@ -77,23 +75,25 @@ export default class Track {
 
   setHarmonicStructure
   setTimbreStructure
+  setChordsFeatures
 
   constructor(
     trackData,
     analysisData,
     setHarmonicStructure,
-    setTimbreStructure
+    setTimbreStructure,
+    setChordsFeatures
   ) {
     this.trackData = trackData
     this.analysisData = analysisData
     this.setHarmonicStructure = setHarmonicStructure
     this.setTimbreStructure = setTimbreStructure
+    this.setChordsFeatures = setChordsFeatures
 
     this.process()
   }
 
   process() {
-    this.processing = true
     console.log('Processing Track: ', this.getName())
 
     this.features = new Features(this.analysisData, {
@@ -144,9 +144,7 @@ export default class Track {
 
     this.computeHarmonicStructure()
     this.computeTimbreStructure()
-
-    this.processed = true
-    this.processing = false
+    this.computeChords()
   }
 
   async computeHarmonicStructure() {
@@ -183,6 +181,37 @@ export default class Track {
     this.setTimbreStructure({
       timbreStructure: this.segmentedTimbreGraph,
       events: this.events,
+    })
+
+    await obj[releaseProxy]()
+    worker.terminate()
+  }
+
+  async computeChords() {
+    const worker = new ChordsWorker()
+    const obj = wrap(worker)
+    const result = await obj.computeChords(
+      this.features.sampled.pitches,
+      this.features.fastSampledPitch,
+      this.features.sampleDuration,
+      this.features.fastSampleDuration
+    )
+
+    console.log('Final chords structure: ', result)
+    this.chordsVector = result.chordsVector
+    this.chords = result.chords
+    this.key = result.key
+    this.tonalityFeatureSmall = result.tonalityFeatureSmall
+    this.tonalityFeatureLarge = result.tonalityFeatureLarge
+    this.keyFeature = result.keyFeature
+
+    this.setChordsFeatures({
+      chordsVector: result.chordsVector,
+      chords: result.chords,
+      key: result.key,
+      tonalityFeatureSmall: result.tonalityFeatureSmall,
+      tonalityFeatureLarge: result.tonalityFeatureLarge,
+      keyFeature: result.keyFeature,
     })
 
     await obj[releaseProxy]()
