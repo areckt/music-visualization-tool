@@ -2,11 +2,15 @@
 [data-theme='light'] {
   --v-card-hover-background-color: hsl(180, 14%, 92%);
   --v-card-active-background-color: hsl(201, 99%, 92%);
+  --v-contrast-bg-color-component: 0;
+  --v-contrast-font-color-component: 255;
 }
 
 :root[data-theme='dark'] {
   --v-card-hover-background-color: hsl(222, 21%, 21%);
   --v-card-active-background-color: hsl(201, 99%, 21%);
+  --v-contrast-bg-color-component: 255;
+  --v-contrast-font-color-component: 0;
 }
 
 * {

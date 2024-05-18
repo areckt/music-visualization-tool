@@ -1,12 +1,5 @@
 import { expose } from 'comlink'
 import * as filter from '../filter'
-import * as structure from '../structure'
-import * as noveltyDetection from '../noveltyDetection'
-import * as Features from '../Features'
-import * as mds from '../mds'
-import Section from '../Section'
-import * as events from '../events'
-import * as SSM from '../SSM'
 import * as keyDetection from '../keyDetection'
 import * as chordDetection from '../chordDetection'
 

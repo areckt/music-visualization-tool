@@ -110,3 +110,20 @@ export function sinebowColorNormalizedRadius(angle, radius, confidence = 1) {
   const c = d3.rgb(colorHSL)
   return `rgba(${c.r},${c.g},${c.b},${confidence})`
 }
+
+export function circleOfFifthsColor(angle, radius, confidence = 1) {
+  const color = colorWheel(angle)
+  const colorHSL = d3.hsl(color)
+  colorHSL.s = radius //Math.pow(radius, 0.2);
+  colorHSL.l = (colorHSL.l - 0.5) * radius + 0.5
+  const c = d3.rgb(colorHSL)
+  return `rgba(${c.r},${c.g},${c.b},${confidence})`
+}
+
+export function circleOfFifthsColorBrightness(angle, radius, brightness = 1) {
+  const color = colorWheel(angle)
+  const colorHSL = d3.hsl(color)
+  colorHSL.s = radius //Math.pow(radius, 0.2);
+  colorHSL.l = brightness
+  return d3.rgb(colorHSL)
+}

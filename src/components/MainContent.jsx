@@ -8,6 +8,7 @@ import {
 import Track from '../utils/Track'
 import { debounce } from '../utils/utils'
 import TimbreStructure from './visualizations/TimbreStructure'
+import Chords from './visualizations/Chords'
 
 const MainContent = () => {
   const {
@@ -21,6 +22,8 @@ const MainContent = () => {
     setHarmonicStructure,
     timbreStructure,
     setTimbreStructure,
+    chordsFeatures,
+    setChordsFeatures,
   } = useGlobalContext()
 
   const headerRef = useRef(null)
@@ -61,7 +64,8 @@ const MainContent = () => {
         trackData,
         trackAudioAnalysis,
         setHarmonicStructure,
-        setTimbreStructure
+        setTimbreStructure,
+        setChordsFeatures
       )
       setTrackObject(track)
     })()
@@ -82,6 +86,9 @@ const MainContent = () => {
         )}
         {trackObject && timbreStructure && (
           <TimbreStructure structure={timbreStructure} width={width} />
+        )}
+        {trackObject && chordsFeatures && (
+          <Chords chords={chordsFeatures.chords} width={width} />
         )}
       </article>
     </main>
