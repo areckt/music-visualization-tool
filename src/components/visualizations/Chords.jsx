@@ -20,7 +20,7 @@ const Chords = ({ chords, width }) => {
 
   const scale = width / trackObject.getAnalysisDuration()
 
-  let seekerTime = 6 // TODO: seeker
+  let seekerTime = 0 // TODO: seeker
   const handleChordClick = (chord) => {
     // TODO: player
   }
@@ -84,8 +84,7 @@ const Chords = ({ chords, width }) => {
               CHORD_NAME_HEIGHT,
               3
             )
-            ctx.strokeStyle =
-              'rgba(var(--v-contrast-bg-color-component),var(--v-contrast-bg-color-component),var(--v-contrast-bg-color-component),0.3)'
+            ctx.strokeStyle = 'rgba(0,0,0,0.3)'
             ctx.lineWidth = 3
             const textSpaceOffset = chord.name.length * 12
             if (!isMajor(chord)) {
@@ -107,7 +106,7 @@ const Chords = ({ chords, width }) => {
                 }
                 ctx.stroke()
               }
-              ctx.fillStyle = 'var(--pico-contrast)'
+              ctx.fillStyle = '#121212'
               ctx.fillRect(
                 CHORD_SCROLL_MIDDLE - lineStep,
                 0,
@@ -117,8 +116,8 @@ const Chords = ({ chords, width }) => {
             }
           }
 
-          ctx.fillStyle = 'var(--pico-background-color)'
-          ctx.font = '18px Roboto'
+          ctx.fillStyle = 'white'
+          ctx.font = '18px system-ui'
 
           ctx.fillText(
             chord.name,
@@ -129,9 +128,8 @@ const Chords = ({ chords, width }) => {
           const opacity = 1 - chordSeekerStartOffset / MAX_CHORD_VIEW_DISTANCE
           ctx.fillStyle = color(chord, opacity * 1.5)
           roundedRect(startX, 0, endX - startX - 3, CHORD_NAME_HEIGHT, 3)
-          ctx.strokeStyle =
-            'rgba(var(--v-contrast-font-color-component),var(--v-contrast-font-color-component),var(--v-contrast-font-color-component),0.3)'
-          ctx.font = '14px Roboto'
+          ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)'
+          ctx.font = '14px system-ui'
           ctx.lineWidth = 3
           if (!isMajor(chord)) {
             const textSpaceOffset = chord.name.length * 12
@@ -154,9 +152,7 @@ const Chords = ({ chords, width }) => {
             }
           }
 
-          ctx.fillStyle = `rgba(var(--v-contrast-bg-color-component),var(--v-contrast-bg-color-component),var(--v-contrast-bg-color-component),${
-            opacity * 2
-          })`
+          ctx.fillStyle = `rgba(0,0,0,${opacity * 2})`
 
           ctx.fillText(chord.name, startX + 2, CHORD_NAME_HEIGHT - 4)
         }
@@ -188,7 +184,7 @@ const Chords = ({ chords, width }) => {
 
   useEffect(() => {
     setupCanvas()
-  }, [])
+  }, [width])
 
   return (
     <ChordsStyled>
