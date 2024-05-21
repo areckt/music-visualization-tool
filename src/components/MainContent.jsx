@@ -9,6 +9,7 @@ import Track from '../utils/Track'
 import { debounce } from '../utils/utils'
 import TimbreStructure from './visualizations/TimbreStructure'
 import Chords from './visualizations/Chords'
+import Tonality from './visualizations/Tonality'
 
 const MainContent = () => {
   const {
@@ -89,6 +90,14 @@ const MainContent = () => {
         )}
         {trackObject && chordsFeatures && (
           <Chords chords={chordsFeatures.chords} width={width} />
+        )}
+        {trackObject && chordsFeatures && (
+          <Tonality
+            tonality={chordsFeatures.tonalityFeatureSmall}
+            tonalitySlow={chordsFeatures.tonalityFeatureLarge}
+            keyFeature={chordsFeatures.keyFeature}
+            width={width}
+          />
         )}
       </article>
     </main>
