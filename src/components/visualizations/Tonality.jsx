@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import * as audioUtil from '../../utils/audioUtil'
 import * as vis from '../../utils/vis'
+import HorizontalSeparator from '../HorizontalSeparator'
 
 const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
   const SECTION_HEIGHT = 20

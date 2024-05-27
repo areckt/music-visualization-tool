@@ -4,6 +4,7 @@ import { useGlobalContext } from '../../context'
 import * as vis from '../../utils/vis'
 import TimbreStructureSection from './TimbreStructureSection'
 import TimbreStructureEvents from './TimbreStructureEvents'
+import HorizontalSeparator from '../HorizontalSeparator'
 
 const TimbreStructure = ({ structure, width }) => {
   const SECTION_HEIGHT = 45
@@ -97,6 +98,7 @@ const TimbreStructure = ({ structure, width }) => {
         ))}
       </svg>
       <TimbreStructureEvents events={structure.events} width={width} />
+      <HorizontalSeparator />
     </TimbreStructureStyled>
   )
 }

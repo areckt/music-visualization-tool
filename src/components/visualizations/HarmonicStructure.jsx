@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import HarmonicStructureSection from './HarmonicStructureSection'
 import { useGlobalContext } from '../../context'
+import HorizontalSeparator from '../HorizontalSeparator'
 
 const HarmonicStructure = ({ structure, width }) => {
   const SECTION_HEIGHT = 40
@@ -94,6 +95,7 @@ const HarmonicStructure = ({ structure, width }) => {
           />
         ))}
       </svg>
+      <HorizontalSeparator />
     </HarmonicStructureStyled>
   )
 }

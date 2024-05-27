@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import * as vis from '../../utils/vis'
+import HorizontalSeparator from '../HorizontalSeparator'
 
 const Chords = ({ chords, width }) => {
   const BLOCK_HEIGHT = 15
@@ -316,6 +317,7 @@ const Chords = ({ chords, width }) => {
         width={width}
         height={CHORD_NAME_HEIGHT}
       ></canvas>
+      <HorizontalSeparator />
     </ChordsStyled>
   )
 }
