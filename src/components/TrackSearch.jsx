@@ -3,7 +3,6 @@ import { fetchTracks, fetchUserTopTracks } from '../utils/spotifyAPI.js'
 import { mapTracks } from '../utils/utils.js'
 import { useGlobalContext } from '../context.jsx'
 import styled from 'styled-components'
-// import { init } from '../utils/workers/workers.js'
 
 const TrackSearch = () => {
   const [search, setSearch] = useState('')
@@ -19,8 +18,6 @@ const TrackSearch = () => {
       setTracks(tracks)
     })()
 
-    // init().then(() => console.log('Workers initialized'))
-
     return () => {
       setSelectedTrackId('')
     }
@@ -28,7 +25,6 @@ const TrackSearch = () => {
 
   const searchTracks = async (e) => {
     e.preventDefault()
-    setSelectedTrackId('')
     if (!search) return setTracks([])
 
     const accessToken = localStorage.getItem('accessToken')
@@ -73,12 +69,6 @@ const TrackSearch = () => {
           </div>
         ))}
       </div>
-      {selectedTrackId && (
-        <>
-          <p>Selected Track ID: {selectedTrackId}</p>
-          <button onClick={() => setSelectedTrackId('')}>Clear</button>
-        </>
-      )}
     </TrackSearchStyled>
   )
 }

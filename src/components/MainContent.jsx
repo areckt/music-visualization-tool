@@ -10,6 +10,8 @@ import { debounce } from '../utils/utils'
 import TimbreStructure from './visualizations/TimbreStructure'
 import Chords from './visualizations/Chords'
 import Tonality from './visualizations/Tonality'
+import SkeletonLoading from './SkeletonLoading'
+import styled from 'styled-components'
 
 const MainContent = () => {
   const {
@@ -25,6 +27,12 @@ const MainContent = () => {
     setTimbreStructure,
     chordsFeatures,
     setChordsFeatures,
+    harmonicStructureLoading,
+    setHarmonicStructureLoading,
+    timbreStructureLoading,
+    setTimbreStructureLoading,
+    chordsFeaturesLoading,
+    setChordsFeaturesLoading,
   } = useGlobalContext()
 
   const headerRef = useRef(null)
@@ -66,7 +74,10 @@ const MainContent = () => {
         trackAudioAnalysis,
         setHarmonicStructure,
         setTimbreStructure,
-        setChordsFeatures
+        setChordsFeatures,
+        setHarmonicStructureLoading,
+        setTimbreStructureLoading,
+        setChordsFeaturesLoading
       )
       setTrackObject(track)
     })()
@@ -79,19 +90,27 @@ const MainContent = () => {
   }, [selectedTrackId])
 
   return (
-    <main className="container">
+    <MainContentStyled className="container">
       <article>
         <h3 ref={headerRef}>Visualizations</h3>
-        {trackObject && harmonicStructure && (
+
+        {harmonicStructureLoading && <SkeletonLoading title="Structure" />}
+        {!harmonicStructureLoading && trackObject && harmonicStructure && (
           <HarmonicStructure structure={harmonicStructure} width={width} />
         )}
-        {trackObject && timbreStructure && (
+
+        {timbreStructureLoading && <SkeletonLoading title="Timbre" />}
+        {!timbreStructureLoading && trackObject && timbreStructure && (
           <TimbreStructure structure={timbreStructure} width={width} />
         )}
-        {trackObject && chordsFeatures && (
+
+        {chordsFeaturesLoading && <SkeletonLoading title="Chords" />}
+        {!chordsFeaturesLoading && trackObject && chordsFeatures && (
           <Chords chords={chordsFeatures.chords} width={width} />
         )}
-        {trackObject && chordsFeatures && (
+
+        {chordsFeaturesLoading && <SkeletonLoading title="Tonality" />}
+        {!chordsFeaturesLoading && trackObject && chordsFeatures && (
           <Tonality
             tonality={chordsFeatures.tonalityFeatureSmall}
             tonalitySlow={chordsFeatures.tonalityFeatureLarge}
@@ -100,8 +119,14 @@ const MainContent = () => {
           />
         )}
       </article>
-    </main>
+    </MainContentStyled>
   )
 }
+
+const MainContentStyled = styled.main`
+  article {
+    min-height: calc(4 * 200px);
+  }
+`
 
 export default MainContent

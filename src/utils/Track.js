@@ -73,22 +73,38 @@ export default class Track {
   clusters = []
   clusterSections
 
+  // visualization data setters
   setHarmonicStructure
   setTimbreStructure
   setChordsFeatures
+
+  // loading setters
+  setHarmonicStructureLoading
+  setTimbreStructureLoading
+  setChordsFeaturesLoading
 
   constructor(
     trackData,
     analysisData,
     setHarmonicStructure,
     setTimbreStructure,
-    setChordsFeatures
+    setChordsFeatures,
+    setHarmonicStructureLoading,
+    setTimbreStructureLoading,
+    setChordsFeaturesLoading
   ) {
     this.trackData = trackData
     this.analysisData = analysisData
+
+    // visualization data setters
     this.setHarmonicStructure = setHarmonicStructure
     this.setTimbreStructure = setTimbreStructure
     this.setChordsFeatures = setChordsFeatures
+
+    // loading setters
+    this.setHarmonicStructureLoading = setHarmonicStructureLoading
+    this.setTimbreStructureLoading = setTimbreStructureLoading
+    this.setChordsFeaturesLoading = setChordsFeaturesLoading
 
     this.process()
   }
@@ -148,6 +164,7 @@ export default class Track {
   }
 
   async computeHarmonicStructure() {
+    this.setHarmonicStructureLoading(true)
     const worker = new HarmonicStructureWorker()
     const obj = wrap(worker)
     const result = await obj.computeHarmonicStructure({
@@ -162,11 +179,14 @@ export default class Track {
     this.harmonicStructureCourse = result.harmonicStructure
     this.setHarmonicStructure(this.harmonicStructureCourse)
 
+    this.setHarmonicStructureLoading(false)
+
     await obj[releaseProxy]()
     worker.terminate()
   }
 
   async computeTimbreStructure() {
+    this.setTimbreStructureLoading(true)
     const worker = new TimbreStructureWorker()
     const obj = wrap(worker)
     const result = await obj.computeTimbreStructure(
@@ -183,11 +203,14 @@ export default class Track {
       events: this.events,
     })
 
+    this.setTimbreStructureLoading(false)
+
     await obj[releaseProxy]()
     worker.terminate()
   }
 
   async computeChords() {
+    this.setChordsFeaturesLoading(true)
     const worker = new ChordsWorker()
     const obj = wrap(worker)
     const result = await obj.computeChords(
@@ -213,6 +236,8 @@ export default class Track {
       tonalityFeatureLarge: result.tonalityFeatureLarge,
       keyFeature: result.keyFeature,
     })
+
+    this.setChordsFeaturesLoading(false)
 
     await obj[releaseProxy]()
     worker.terminate()

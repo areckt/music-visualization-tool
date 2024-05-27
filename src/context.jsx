@@ -14,6 +14,12 @@ const AppContext = ({ children }) => {
   const [timbreStructure, setTimbreStructure] = useState()
   const [chordsFeatures, setChordsFeatures] = useState()
 
+  // loading states
+  const [harmonicStructureLoading, setHarmonicStructureLoading] =
+    useState(false)
+  const [timbreStructureLoading, setTimbreStructureLoading] = useState(false)
+  const [chordsFeaturesLoading, setChordsFeaturesLoading] = useState(false)
+
   return (
     <GlobalContext.Provider
       value={{
@@ -33,6 +39,12 @@ const AppContext = ({ children }) => {
         setTimbreStructure,
         chordsFeatures,
         setChordsFeatures,
+        harmonicStructureLoading,
+        setHarmonicStructureLoading,
+        timbreStructureLoading,
+        setTimbreStructureLoading,
+        chordsFeaturesLoading,
+        setChordsFeaturesLoading,
       }}
     >
       {children}
