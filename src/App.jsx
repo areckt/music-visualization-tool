@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Dashboard from './components/Dashboard'
 import Login from './components/Login'
 import './styles/pico.min.css'
@@ -10,8 +11,16 @@ const root = document.documentElement
 const theme = localStorage.getItem('theme') || 'light'
 root.setAttribute('data-theme', theme)
 
+const queryClient = new QueryClient()
+
 function App() {
-  return code ? <Dashboard code={code} /> : <Login />
+  return code ? (
+    <QueryClientProvider client={queryClient}>
+      <Dashboard code={code} />
+    </QueryClientProvider>
+  ) : (
+    <Login />
+  )
 }
 
 export default App

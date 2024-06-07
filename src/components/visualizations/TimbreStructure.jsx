@@ -38,7 +38,7 @@ const TimbreStructure = ({ structure, width }) => {
           <span
             role="button"
             className={showLoudness ? 'on' : 'off'}
-            onClick={() => setShowLoudness(!showLoudness)}
+            onMouseDown={() => setShowLoudness(!showLoudness)}
             data-tooltip={
               showLoudness
                 ? 'Loudness embedding: ON'
@@ -50,7 +50,7 @@ const TimbreStructure = ({ structure, width }) => {
           <span
             role="button"
             className={showDescription ? 'on' : 'off'}
-            onClick={() => setShowDescription(!showDescription)}
+            onMouseDown={() => setShowDescription(!showDescription)}
             data-tooltip="Toggle description"
           >
             <span className="material-icons">help</span>

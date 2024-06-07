@@ -19,7 +19,7 @@ const Profile = ({ profile }) => {
           <button
             data-tooltip="Toggle light / dark theme"
             className="outline"
-            onClick={toggleTheme}
+            onMouseDown={toggleTheme}
           >
             ☀️ / 🌙
           </button>

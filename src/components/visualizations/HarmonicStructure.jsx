@@ -33,7 +33,7 @@ const HarmonicStructure = ({ structure, width }) => {
           <span
             role="button"
             className={showLoudness ? 'on' : 'off'}
-            onClick={() => setShowLoudness(!showLoudness)}
+            onMouseDown={() => setShowLoudness(!showLoudness)}
             data-tooltip={
               showLoudness
                 ? 'Loudness embedding: ON'
@@ -45,7 +45,7 @@ const HarmonicStructure = ({ structure, width }) => {
           <span
             role="button"
             className={catColoring ? 'off' : 'on'}
-            onClick={() => setCatColoring(!catColoring)}
+            onMouseDown={() => setCatColoring(!catColoring)}
             data-tooltip={
               catColoring
                 ? 'Colors show similarity between groups'
@@ -57,7 +57,7 @@ const HarmonicStructure = ({ structure, width }) => {
           <span
             role="button"
             className={showDescription ? 'on' : 'off'}
-            onClick={() => setShowDescription(!showDescription)}
+            onMouseDown={() => setShowDescription(!showDescription)}
             data-tooltip="Toggle description"
           >
             <span className="material-icons">help</span>

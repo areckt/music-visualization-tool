@@ -6,9 +6,9 @@ const HorizontalSeparator = () => {
 
 const HorizontalSeparatorStyled = styled.div`
   width: 100%;
-  height: 0.2rem;
+  height: 0.1rem;
   border-radius: 0.1rem;
-  margin: 2rem 0;
+  margin: 2.5rem 0;
   background-image: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0,

@@ -127,7 +127,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
           <span
             role="button"
             className={circleCollapsed ? 'off' : 'on'}
-            onClick={() => setCircleCollapsed(!circleCollapsed)}
+            onMouseDown={() => setCircleCollapsed(!circleCollapsed)}
             data-tooltip={
               circleCollapsed
                 ? 'Circle of 5-ths is hidden'
@@ -141,7 +141,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
           <span
             role="button"
             className={showDescription ? 'on' : 'off'}
-            onClick={() => setShowDescription(!showDescription)}
+            onMouseDown={() => setShowDescription(!showDescription)}
             data-tooltip="Toggle description"
           >
             <span className="material-icons">help</span>

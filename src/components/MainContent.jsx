@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useGlobalContext } from '../context'
 import HarmonicStructure from './visualizations/HarmonicStructure'
 import {
@@ -17,8 +18,6 @@ const MainContent = () => {
   const {
     selectedTrackId,
     trackData,
-    setTrackAudioFeatures,
-    setTrackAudioAnalysis,
     trackObject,
     setTrackObject,
     harmonicStructure,
@@ -27,23 +26,24 @@ const MainContent = () => {
     setTimbreStructure,
     chordsFeatures,
     setChordsFeatures,
-    harmonicStructureLoading,
-    setHarmonicStructureLoading,
-    timbreStructureLoading,
-    setTimbreStructureLoading,
-    chordsFeaturesLoading,
-    setChordsFeaturesLoading,
   } = useGlobalContext()
 
   const headerRef = useRef(null)
   const [width, setWidth] = useState(window.innerWidth)
 
+  // loading states
+  const [harmonicStructureLoading, setHarmonicStructureLoading] =
+    useState(false)
+  const [timbreStructureLoading, setTimbreStructureLoading] = useState(false)
+  const [chordsFeaturesLoading, setChordsFeaturesLoading] = useState(false)
+
+  // handle window resize
   useEffect(() => {
     setWidth(headerRef.current.getBoundingClientRect().width)
 
     const debouncedHandleResize = debounce(function handleResize() {
       setWidth(headerRef.current.getBoundingClientRect().width)
-    }, 500)
+    }, 250)
 
     window.addEventListener('resize', debouncedHandleResize)
 
@@ -52,23 +52,20 @@ const MainContent = () => {
     }
   }, [])
 
+  const accessToken = localStorage.getItem('accessToken')
+
+  const { data: trackAudioFeatures, isLoading: isFeaturesLoading } = useQuery({
+    queryKey: ['trackAudioFeatures', selectedTrackId],
+    queryFn: () => fetchTrackAudioFeatures(accessToken, selectedTrackId),
+  })
+
+  const { data: trackAudioAnalysis, isLoading: isAnalysisLoading } = useQuery({
+    queryKey: ['trackAudioAnalysis', selectedTrackId],
+    queryFn: () => fetchTrackAudioAnalysis(accessToken, selectedTrackId),
+  })
+
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken')
-    ;(async () => {
-      const trackAudioFeatures = await fetchTrackAudioFeatures(
-        accessToken,
-        selectedTrackId
-      )
-      setTrackAudioFeatures(trackAudioFeatures)
-      console.log('Audio Features: ', trackAudioFeatures)
-
-      const trackAudioAnalysis = await fetchTrackAudioAnalysis(
-        accessToken,
-        selectedTrackId
-      )
-      setTrackAudioAnalysis(trackAudioAnalysis)
-      console.log('Audio Analysis: ', trackAudioAnalysis)
-
+    if (!isAnalysisLoading) {
       const track = new Track(
         trackData,
         trackAudioAnalysis,
@@ -80,14 +77,8 @@ const MainContent = () => {
         setChordsFeaturesLoading
       )
       setTrackObject(track)
-    })()
-
-    return () => {
-      setTrackAudioFeatures(null)
-      setTrackAudioAnalysis(null)
-      setTrackObject(null)
     }
-  }, [selectedTrackId])
+  }, [isAnalysisLoading, trackData, trackAudioAnalysis])
 
   return (
     <MainContentStyled className="container">

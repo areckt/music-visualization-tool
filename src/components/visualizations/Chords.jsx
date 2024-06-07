@@ -195,7 +195,7 @@ const Chords = ({ chords, width }) => {
           <span
             role="button"
             className={chordsCollapsed ? 'off' : 'on'}
-            onClick={() => setChordsCollapsed(!chordsCollapsed)}
+            onMouseDown={() => setChordsCollapsed(!chordsCollapsed)}
             data-tooltip={
               chordsCollapsed
                 ? 'Chords are displayed in a single row'
@@ -209,7 +209,7 @@ const Chords = ({ chords, width }) => {
           <span
             role="button"
             className={showDescription ? 'on' : 'off'}
-            onClick={() => setShowDescription(!showDescription)}
+            onMouseDown={() => setShowDescription(!showDescription)}
             data-tooltip="Toggle description"
           >
             <span className="material-icons">help</span>
@@ -286,7 +286,7 @@ const Chords = ({ chords, width }) => {
             width={(chord.end - chord.start) * scale - 0.5}
             height={BLOCK_HEIGHT - 0.5}
             fill={color(chord)}
-            onClick={() => handleChordClick(chord)}
+            onMouseDown={() => handleChordClick(chord)}
           />
         ))}
         {chords.map((chord, index) => (
@@ -307,7 +307,7 @@ const Chords = ({ chords, width }) => {
             height={BLOCK_HEIGHT - 0.5}
             fill={colorBrightness(chord, 0.5)}
             mask="url(#diagonalMask)"
-            onClick={() => handleChordClick(chord)}
+            onMouseDown={() => handleChordClick(chord)}
           />
         ))}
       </svg>

@@ -10,8 +10,8 @@ const TrackSearch = () => {
   const { selectedTrackId, setSelectedTrackId, setTrackData } =
     useGlobalContext()
 
+  const accessToken = localStorage.getItem('accessToken')
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken')
     ;(async () => {
       const result = await fetchUserTopTracks(accessToken)
       const tracks = mapTracks(result.items)
@@ -27,7 +27,6 @@ const TrackSearch = () => {
     e.preventDefault()
     if (!search) return setTracks([])
 
-    const accessToken = localStorage.getItem('accessToken')
     const result = await fetchTracks(accessToken, search)
     const tracks = mapTracks(result.tracks.items)
     setTracks(tracks)
@@ -56,7 +55,7 @@ const TrackSearch = () => {
           <div
             className={`track ${selectedTrackId == track.id ? 'active' : ''}`}
             key={track.id}
-            onClick={() => handleSelectTrack(track)}
+            onMouseDown={() => handleSelectTrack(track)}
           >
             <img src={track.image} alt={track.name} />
             <div className="track-data">
