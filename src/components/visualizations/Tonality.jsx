@@ -15,9 +15,8 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
 
   const canvasElement = useRef(null)
 
-  const { trackObject } = useGlobalContext()
+  const { trackObject, seeker } = useGlobalContext()
 
-  let seeker = 0 // TODO: seeker
   const handleClickCanvas = (event) => {
     // TODO: player
   }
@@ -48,6 +47,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
 
   function tonalityPointerPath(tonality) {
     const scale = CIRCLE_OF_FIFTHS_SIZE / 2
+    if (!tonality[currentFastSample]) return
     const radius = Math.tanh(tonality[currentFastSample][1] * 3) * 0.5
     const x = 0 // Math.cos(tonality[currentSample][0] * Math.PI * 2);
     const y = -1 //Math.sin(tonality[currentSample][0] * Math.PI * 2);

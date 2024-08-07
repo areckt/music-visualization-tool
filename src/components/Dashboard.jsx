@@ -4,6 +4,7 @@ import Profile from './Profile'
 import TrackSearch from './TrackSearch'
 import { useGlobalContext } from '../context'
 import MainContent from './MainContent'
+import SpotifyPlayer from './SpotifyPlayer'
 
 function Dashboard({ code }) {
   const [accessToken, setAccessToken] = useState()
@@ -36,6 +37,7 @@ function Dashboard({ code }) {
         {profile && <TrackSearch />}
       </header>
       {selectedTrackId && <MainContent />}
+      <SpotifyPlayer token={accessToken} trackId={selectedTrackId} />
     </>
   )
 }

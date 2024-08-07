@@ -15,13 +15,12 @@ const Chords = ({ chords, width }) => {
 
   const canvasElement = useRef(null)
 
-  const { trackObject } = useGlobalContext()
+  const { trackObject, seeker } = useGlobalContext()
 
   let height = BLOCK_HEIGHT * (chordsCollapsed ? 1 : 12)
 
   const scale = width / trackObject.getAnalysisDuration()
 
-  let seekerTime = 0 // TODO: seeker
   const handleChordClick = (chord) => {
     // TODO: player
   }
@@ -66,16 +65,17 @@ const Chords = ({ chords, width }) => {
     ctx.fillStyle = 'white'
 
     chords.forEach((chord) => {
-      const chordSeekerStartOffset = chord.start - seekerTime
+      const seekerInSeconds = seeker / 1000
+      const chordSeekerStartOffset = chord.start - seekerInSeconds
       let startX = CHORD_SCROLL_MIDDLE + chordSeekerStartOffset * scale * 22
-      const chordSeekerEndOffset = chord.end - seekerTime
+      const chordSeekerEndOffset = chord.end - seekerInSeconds
       const endX = CHORD_SCROLL_MIDDLE + chordSeekerEndOffset * scale * 22
 
       if (
         chordSeekerEndOffset > 0 &&
         chordSeekerStartOffset < MAX_CHORD_VIEW_DISTANCE
       ) {
-        if (chord.start <= seekerTime) {
+        if (chord.start <= seekerInSeconds) {
           ctx.fillStyle = color(chord, 1)
           if (endX - CHORD_SCROLL_MIDDLE - 3 > 6) {
             roundedRect(
@@ -185,7 +185,7 @@ const Chords = ({ chords, width }) => {
 
   useEffect(() => {
     setupCanvas()
-  }, [width])
+  }, [width, seeker])
 
   return (
     <ChordsStyled>

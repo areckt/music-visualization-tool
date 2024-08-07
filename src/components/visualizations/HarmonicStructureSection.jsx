@@ -14,9 +14,8 @@ const HarmonicStructureSection = ({
   const GLOW_SIZE = 6
   const NO_LOUDNESS_HEIGHT = 0.8
 
-  let seekerIsInSection = false,
-    seeker = 0 // TODO: implement seeker
-  const { trackObject } = useGlobalContext()
+  let seekerIsInSection = false
+  const { trackObject, seeker } = useGlobalContext()
 
   const width = Math.max(1, (section.end - section.start) * scale - 2)
   const x = section.start * scale
