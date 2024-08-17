@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import HarmonicStructureSection from './HarmonicStructureSection'
 import { useGlobalContext } from '../../context'
 import HorizontalSeparator from '../HorizontalSeparator'
+import Seeker from './Seeker'
 
 const HarmonicStructure = ({ structure, width }) => {
   const SECTION_HEIGHT = 40
@@ -81,6 +82,7 @@ const HarmonicStructure = ({ structure, width }) => {
           between the groups.
         </p>
       </div>
+      <Seeker width={width} height={height} />
       <svg className="structureSVG" width={width} height={height}>
         {structure.map((section, index) => (
           <HarmonicStructureSection

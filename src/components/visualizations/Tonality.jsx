@@ -4,6 +4,7 @@ import { useGlobalContext } from '../../context'
 import * as audioUtil from '../../utils/audioUtil'
 import * as vis from '../../utils/vis'
 import HorizontalSeparator from '../HorizontalSeparator'
+import Seeker from './Seeker'
 
 const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
   const SECTION_HEIGHT = 20
@@ -124,7 +125,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
       <div className="visualizationHeader">
         <h4>Tonality</h4>
         <div className="buttons">
-          <span
+          {/* <span
             role="button"
             className={circleCollapsed ? 'off' : 'on'}
             onMouseDown={() => setCircleCollapsed(!circleCollapsed)}
@@ -137,7 +138,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
             <span className="material-icons">
               {circleCollapsed ? 'horizontal_rule' : 'density_medium'}
             </span>
-          </span>
+          </span> */}
           <span
             role="button"
             className={showDescription ? 'on' : 'off'}
@@ -156,15 +157,21 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
         <p>
           This visualization shows the song's tonality change over time.
           Similarly to the chords, the colors correspond to the circle of
-          fifths. The{' '}
+          fifths.
+          {/* <span>
+            The{' '}
           <span className="material-icons">
             {circleCollapsed ? 'horizontal_rule' : 'density_medium'}
           </span>{' '}
           button toggles visibility of the circle of fifths with keys and their
           corresponding colors. A real-time, fast and slow pointers show the
           detected key for a given moment.
+            </span> */}
         </p>
       </div>
+
+      <Seeker width={width} height={HEIGHT} />
+
       <canvas
         ref={canvasElement}
         className="tonalityCanvas"
@@ -173,7 +180,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
         onClick={handleClickCanvas}
       ></canvas>
 
-      <div
+      {/* <div
         style={{
           height: circleCollapsed ? '0px' : CIRCLE_OF_FIFTHS_SIZE + 'px',
         }}
@@ -288,7 +295,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
             stroke={color(currentAngle)}
           />
         </svg>
-      </div>
+      </div> */}
     </TonalityStyled>
   )
 }

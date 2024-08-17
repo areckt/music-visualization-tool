@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const TrackSearch = () => {
   const [search, setSearch] = useState('')
   const [tracks, setTracks] = useState([])
-  const { selectedTrackId, setSelectedTrackId, setTrackData } =
+  const { selectedTrackId, setSelectedTrackId, setTrackData, setSeeker } =
     useGlobalContext()
 
   const accessToken = localStorage.getItem('accessToken')
@@ -36,6 +36,7 @@ const TrackSearch = () => {
     console.log(track)
     setTrackData(track)
     setSelectedTrackId(track.id)
+    setSeeker(0)
   }
 
   return (

@@ -37,7 +37,11 @@ function Dashboard({ code }) {
         {profile && <TrackSearch />}
       </header>
       {selectedTrackId && <MainContent />}
-      <SpotifyPlayer token={accessToken} trackId={selectedTrackId} />
+      <SpotifyPlayer
+        key={selectedTrackId}
+        token={accessToken}
+        trackId={selectedTrackId}
+      />
     </>
   )
 }

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import * as vis from '../../utils/vis'
 import HorizontalSeparator from '../HorizontalSeparator'
+import Seeker from './Seeker'
+import { spotifyApi } from 'react-spotify-web-playback'
 
 const Chords = ({ chords, width }) => {
   const BLOCK_HEIGHT = 15
@@ -15,14 +17,16 @@ const Chords = ({ chords, width }) => {
 
   const canvasElement = useRef(null)
 
-  const { trackObject, seeker } = useGlobalContext()
+  const { trackObject, seeker, setSeeker } = useGlobalContext()
 
   let height = BLOCK_HEIGHT * (chordsCollapsed ? 1 : 12)
 
   const scale = width / trackObject.getAnalysisDuration()
 
   const handleChordClick = (chord) => {
-    // TODO: player
+    const accessToken = localStorage.getItem('accessToken')
+    spotifyApi.seek(accessToken, Math.floor(chord.start * 1000))
+    setSeeker(chord.start * 1000)
   }
 
   const calculateChordGapOffset = () => {
@@ -107,7 +111,7 @@ const Chords = ({ chords, width }) => {
                 }
                 ctx.stroke()
               }
-              ctx.fillStyle = '#121212'
+              // ctx.fillStyle = 'var(--pico-card-background)'
               ctx.fillRect(
                 CHORD_SCROLL_MIDDLE - lineStep,
                 0,
@@ -117,7 +121,7 @@ const Chords = ({ chords, width }) => {
             }
           }
 
-          ctx.fillStyle = 'white'
+          ctx.fillStyle = '#5d6b89'
           ctx.font = '18px system-ui'
 
           ctx.fillText(
@@ -232,6 +236,7 @@ const Chords = ({ chords, width }) => {
           button toggles chords display mode (single row / multiple rows).
         </p>
       </div>
+      <Seeker width={width} height={height} />
       <svg className="chordsSVG" width={width} height={height}>
         <defs>
           <pattern

@@ -5,6 +5,7 @@ import * as vis from '../../utils/vis'
 import TimbreStructureSection from './TimbreStructureSection'
 import TimbreStructureEvents from './TimbreStructureEvents'
 import HorizontalSeparator from '../HorizontalSeparator'
+import Seeker from './Seeker'
 
 const TimbreStructure = ({ structure, width }) => {
   const SECTION_HEIGHT = 45
@@ -73,6 +74,7 @@ const TimbreStructure = ({ structure, width }) => {
           in the music where the timbre is unique and locally distinct.
         </p>
       </div>
+      <Seeker width={width} height={HEIGHT} />
       <svg className="timbreStructureSVG" width={width} height={HEIGHT}>
         <defs>
           <linearGradient id="pathGradient" x1="0" x2="0" y="0" y2="1">

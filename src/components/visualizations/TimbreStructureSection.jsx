@@ -2,6 +2,7 @@ import { useGlobalContext } from '../../context'
 import styled from 'styled-components'
 import * as vis from '../../utils/vis'
 import * as svgVariableWidthLine from 'svg-variable-width-line'
+import { spotifyApi } from 'react-spotify-web-playback'
 
 const TimbreStructureSection = ({
   section,
@@ -17,10 +18,16 @@ const TimbreStructureSection = ({
   const STROKE_WIDTH = 0.5
   const NO_LOUDNESS_HEIGHT = 0.8
 
-  let seekerIsInSection = false,
-    seeker = 0 // TODO: implement seeker
+  const { trackObject, seeker, setSeeker } = useGlobalContext()
 
-  const { trackObject } = useGlobalContext()
+  const seekerIsInSection =
+    seeker / 1000 >= section.start && seeker / 1000 < section.end
+
+  const handleClick = () => {
+    const accessToken = localStorage.getItem('accessToken')
+    spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
+    setSeeker(section.start * 1000)
+  }
 
   const verticalPosition = section.mdsFeature * (containerHeight - height)
   const color = vis.zeroOneColorWarm(section.mdsFeature)
@@ -186,6 +193,7 @@ const TimbreStructureSection = ({
         d={shapedSectionPath()}
         shapeRendering="geometricPrecision"
         fill={`url(#sectionGradient${section.start})`}
+        onClick={handleClick}
       ></path>
     </TimbreStructureSectionStyled>
   )

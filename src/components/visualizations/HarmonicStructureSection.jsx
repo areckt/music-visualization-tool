@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import * as vis from '../../utils/vis'
 import { useGlobalContext } from '../../context'
+import { spotifyApi } from 'react-spotify-web-playback'
 
 const HarmonicStructureSection = ({
   section,
@@ -14,12 +15,19 @@ const HarmonicStructureSection = ({
   const GLOW_SIZE = 6
   const NO_LOUDNESS_HEIGHT = 0.8
 
-  let seekerIsInSection = false
-  const { trackObject, seeker } = useGlobalContext()
+  const { trackObject, seeker, setSeeker } = useGlobalContext()
+  const seekerIsInSection =
+    seeker / 1000 >= section.start && seeker / 1000 < section.end
 
   const width = Math.max(1, (section.end - section.start) * scale - 2)
   const x = section.start * scale
   const y = verticalOffset + section.groupID * height + verticalOffset
+
+  const handleClick = () => {
+    const accessToken = localStorage.getItem('accessToken')
+    spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
+    setSeeker(section.start * 1000)
+  }
 
   const calcColor = () => {
     switch (coloring) {
@@ -206,6 +214,7 @@ const HarmonicStructureSection = ({
         className="shapedSection"
         d={shapedSectionPath()}
         fill={color}
+        onClick={handleClick}
       ></path>
     </HarmonicStructureSectionStyled>
   )

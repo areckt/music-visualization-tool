@@ -1,26 +1,23 @@
 import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import * as vis from '../../utils/vis'
+import Seeker from './Seeker'
+import { spotifyApi } from 'react-spotify-web-playback'
 
 const TimbreStructureEvents = ({ width, events }) => {
   const EVENT_SIZE = 6
   const EVENT_ACTIVE_SIZE = 9
   const HEIGHT = 100
 
-  const { trackObject } = useGlobalContext()
+  const { trackObject, seeker, setSeeker } = useGlobalContext()
 
   const scale = width / trackObject.getAnalysisDuration()
 
-  const handleClickBackground = (e) => {
-    // TODO: seeker and player
-  }
-
   const handleClickEvent = (event) => {
-    // TODO: seeker and player
+    const accessToken = localStorage.getItem('accessToken')
+    spotifyApi.seek(accessToken, Math.floor(event.time * 1000))
+    setSeeker((event.time - 0.2) * 1000)
   }
-
-  let seekerIsInEvent = false,
-    seeker = 0 // TODO: implement seeker
 
   const color = (element, confidence = 1) => {
     return vis.sinebowColorNormalizedRadius(element.colorAngle, 1, confidence)
@@ -34,6 +31,7 @@ const TimbreStructureEvents = ({ width, events }) => {
   return (
     <TimbreStructureEventsStyled $eventSize={EVENT_ACTIVE_SIZE}>
       <div className="events">
+        <Seeker width={width} height={HEIGHT} />
         <svg
           className="eventSVG"
           style={{ marginLeft: -EVENT_SIZE }}
@@ -45,7 +43,6 @@ const TimbreStructureEvents = ({ width, events }) => {
             width={width}
             height={HEIGHT}
             opacity="0"
-            onClick={handleClickBackground}
           ></rect>
           {events.map((event) => (
             <circle
@@ -53,7 +50,7 @@ const TimbreStructureEvents = ({ width, events }) => {
               className="event"
               cx={EVENT_SIZE + event.time * scale + EVENT_SIZE / 2}
               cy={calcCircleVerticalPosition(event)}
-              r={seekerIsInEvent ? EVENT_ACTIVE_SIZE : EVENT_SIZE}
+              r={EVENT_SIZE}
               fill={color(event, event.confidence + 0.5)}
               onClick={() => handleClickEvent(event)}
             ></circle>

@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 import SpotifyWebPlayer, { spotifyApi } from 'react-spotify-web-playback'
-import { useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useGlobalContext } from '../context'
 
 const SpotifyPlayer = ({ token, trackId }) => {
   const { seeker, setSeeker } = useGlobalContext()
   const interval = useRef(null)
+  const [uris, setUris] = useState('')
 
   const onUpdate = (state) => {
     setSeeker(state.progressMs)
@@ -18,11 +19,17 @@ const SpotifyPlayer = ({ token, trackId }) => {
     }
   }
 
+  useEffect(() => {
+    spotifyApi.seek(token, 0)
+    setSeeker(0)
+    setUris(`spotify:track:${trackId}`)
+  }, [trackId])
+
   return (
     <SpotifyPlayerStyled className="container">
       <SpotifyWebPlayer
         token={token}
-        uris={`spotify:track:${trackId}`}
+        uris={uris}
         callback={onUpdate}
         layout="compact"
         hideCoverArt

@@ -84,6 +84,11 @@
   background-color: var(--pico-progress-background-color) !important;
 }
 
+.slider__range {
+  background-color: var(--pico-primary-background) !important;
+  opacity: 0.5;
+}
+
 .slider__thumb {
   height: 16px !important;
   width: 16px !important;
