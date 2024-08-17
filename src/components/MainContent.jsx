@@ -117,7 +117,7 @@ const MainContent = () => {
 const MainContentStyled = styled.main`
   article {
     min-height: calc(4 * 200px);
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
   }
 `
 

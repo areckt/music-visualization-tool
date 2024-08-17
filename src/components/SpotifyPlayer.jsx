@@ -35,9 +35,10 @@ export default SpotifyPlayer
 
 const SpotifyPlayerStyled = styled.div`
   position: fixed;
-  border-top: 1px solid black;
+  z-index: 999;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
+  box-shadow: 0 -2px 10px -2px rgba(0, 0, 0, 0.2);
 `

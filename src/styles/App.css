@@ -40,3 +40,57 @@
   font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
+
+.PlayerRSWP {
+  background-color: var(--pico-card-background-color) !important;
+}
+
+._ControlsRSWP {
+  padding-inline: 21px;
+}
+
+.ButtonRSWP {
+  margin-bottom: 0;
+  padding: 0;
+  background-color: transparent;
+  color: var(--pico-background-color);
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+._ControlsRSWP .rswp__devices,
+._ControlsRSWP .rswp__volume {
+  display: none;
+}
+
+.rswp_progress {
+  position: absolute;
+  left: 0.5rem;
+  top: 1.5rem;
+  color: var(--pico-color) !important;
+}
+
+.rswp_duration {
+  position: absolute;
+  right: 0.5rem;
+  top: 1.5rem;
+  color: var(--pico-color) !important;
+}
+
+.slider,
+.slider__track {
+  height: 8px !important;
+  background-color: var(--pico-progress-background-color) !important;
+}
+
+.slider__thumb {
+  height: 16px !important;
+  width: 16px !important;
+  top: -8px !important;
+  background-color: var(--pico-primary-background) !important;
+}
+
+.rswp__active._InfoRSWP {
+  display: none;
+}
