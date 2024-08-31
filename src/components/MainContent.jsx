@@ -13,6 +13,8 @@ import Chords from './visualizations/Chords'
 import Tonality from './visualizations/Tonality'
 import SkeletonLoading from './SkeletonLoading'
 import styled from 'styled-components'
+import MoodCompass from './visualizations/MoodCompass'
+import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
 
 const MainContent = () => {
   const {
@@ -78,12 +80,26 @@ const MainContent = () => {
       )
       setTrackObject(track)
     }
-  }, [isAnalysisLoading, trackData, trackAudioAnalysis])
+  }, [
+    isAnalysisLoading,
+    trackData,
+    trackAudioAnalysis,
+    isFeaturesLoading,
+    trackAudioFeatures,
+  ])
 
   return (
     <MainContentStyled className="container">
       <article>
         <h3 ref={headerRef}>Visualizations</h3>
+
+        {isFeaturesLoading ? (
+          <SkeletonLoading title="Audio Features Charts" />
+        ) : (
+          <>
+            <AudioFeaturesCharts audioFeatures={trackAudioFeatures} />
+          </>
+        )}
 
         {harmonicStructureLoading && <SkeletonLoading title="Structure" />}
         {!harmonicStructureLoading && trackObject && harmonicStructure && (

@@ -121,3 +121,59 @@ export function deepEqual(obj1, obj2) {
   // If all checks pass, the objects are deep equal.
   return true
 }
+
+export function describeSong(valence, energy, loudness, danceability, tempo) {
+  let description = 'This song '
+
+  // Describe valence
+  if (valence < 0.25) {
+    description += 'has a very negative mood, sounding sad or depressed. '
+  } else if (valence < 0.4) {
+    description += 'has a somewhat negative mood. '
+  } else if (valence < 0.6) {
+    description += 'has a neutral mood. '
+  } else if (valence < 0.75) {
+    description += 'has a slightly positive mood. '
+  } else {
+    description += 'has a very positive and uplifting mood. '
+  }
+
+  // Describe energy
+  if (energy < 0.3) {
+    description += "It's a low-energy track, possibly calm and relaxing. "
+  } else if (energy < 0.7) {
+    description += 'It has a moderate energy level. '
+  } else {
+    description += "It's a high-energy, intense track. "
+  }
+
+  // Describe loudness
+  if (loudness < -30) {
+    description += 'The track is quite quiet overall. '
+  } else if (loudness < -10) {
+    description += 'The track has a moderate volume. '
+  } else {
+    description += 'The track is relatively loud. '
+  }
+
+  // Describe danceability
+  if (danceability < 0.3) {
+    description += "It's not very suitable for dancing. "
+  } else if (danceability < 0.7) {
+    description += 'It has a moderate danceability. '
+  } else {
+    description += "It's highly danceable. "
+  }
+
+  // Describe tempo
+  if (tempo < 70) {
+    description += 'The tempo is slow, '
+  } else if (tempo < 120) {
+    description += 'The tempo is moderate, '
+  } else {
+    description += 'The tempo is fast, '
+  }
+  description += `at approximately ${Math.round(tempo)} BPM.`
+
+  return description
+}
