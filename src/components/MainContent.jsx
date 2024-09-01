@@ -13,7 +13,6 @@ import Chords from './visualizations/Chords'
 import Tonality from './visualizations/Tonality'
 import SkeletonLoading from './SkeletonLoading'
 import styled from 'styled-components'
-import MoodCompass from './visualizations/MoodCompass'
 import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
 
 const MainContent = () => {
