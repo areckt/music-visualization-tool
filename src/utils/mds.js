@@ -20,7 +20,7 @@ export function getMDSFeature(distanceMatrix) {
 }
 
 export function getMDSCoordinatesSamples(features, strategy) {
-  console.log('CalculatingMDSSamples')
+  // console.log('CalculatingMDSSamples')
   const amount = features.length
   const distanceMatrix = new HalfMatrix({
     size: amount,
@@ -48,7 +48,7 @@ export function getMDSCoordinatesSamples(features, strategy) {
 }
 
 export function getMDSCoordinates(distanceMatrix, strategy = 'Classic') {
-  console.log('CalculatingMDS with strategy = ', strategy)
+  // console.log('CalculatingMDS with strategy = ', strategy)
 
   const learnRates = [13]
   let best = null
@@ -86,7 +86,7 @@ export function getMDSCoordinates(distanceMatrix, strategy = 'Classic') {
         )
         if (isNaN(coords.lossPerStep[coords.lossPerStep.length - 1])) {
           learnRates.push(learnRates[learnRates.length - 1] / 2)
-          console.log('Changing rate to ', learnRates[learnRates.length - 1])
+          // console.log('Changing rate to ', learnRates[learnRates.length - 1])
         } else if (
           coords.lossPerStep[coords.lossPerStep.length - 1] < bestLoss
         ) {
@@ -180,7 +180,7 @@ function getMdsCoordinatesWithGradientDescentMatrix(
     }
 
     if (logEvery > 0 && step % logEvery === 0) {
-      console.log(`Step: ${step}, loss: ${loss}`)
+      // console.log(`Step: ${step}, loss: ${loss}`)
     }
 
     // Apply the gradient for each coordinate.
@@ -249,7 +249,7 @@ function getMdsCoordinatesWithGaussNewton(
     }
 
     if (logEvery > 0 && step % logEvery === 0) {
-      console.log(`Step: ${step}, loss: ${loss}`)
+      // console.log(`Step: ${step}, loss: ${loss}`)
     }
 
     // Apply the update.
@@ -504,7 +504,7 @@ export function normalize1DCoordinates(coords) {
   for (let i = 0; i < coords.length; i++) {
     coords[i] = (coords[i] - min) / (max - min)
   }
-  console.log('min, max, coords: ', min, max, coords)
+  // console.log('min, max, coords: ', min, max, coords)
   return coords
 }
 

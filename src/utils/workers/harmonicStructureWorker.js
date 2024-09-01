@@ -7,7 +7,7 @@ import Matrix from '../dataStructures/Matrix'
 
 const obj = {
   computeHarmonicStructure(options) {
-    console.log('options in computeHarmonicWorker: ', options)
+    // console.log('options in computeHarmonicWorker: ', options)
     const sampleAmount = options.pitchFeatures.length
 
     const smoothedpitchFeatures = filter.gaussianBlurFeatures(
@@ -48,7 +48,7 @@ const obj = {
       duration
     )
 
-    console.log('sampledSegments: ', sampledSegments)
+    // console.log('sampledSegments: ', sampledSegments)
 
     const updateCallback = (
       harmonicStructure,

@@ -35,7 +35,7 @@ export function generate1DlinearKernel(size) {
 }
 
 export function linearBlur2DOptimized(matrix, size) {
-  console.log('Performing 2D linear', size)
+  // console.log('Performing 2D linear', size)
   const matrixSize = matrix.getSize()
   const fullKernelSize = size * 2 + 1
   const kernel1D = generate1DlinearKernel(fullKernelSize)

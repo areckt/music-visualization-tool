@@ -10,7 +10,7 @@ const SpotifyPlayer = ({ token, trackId }) => {
 
   const onUpdate = (state) => {
     setSeeker(state.progressMs)
-    console.log('playback state: ', state)
+    // console.log('playback state: ', state)
     clearInterval(interval.current)
     if (state.isPlaying) {
       interval.current = setInterval(() => {

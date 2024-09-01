@@ -66,15 +66,15 @@ export default class Features {
       options.samples
     )
     this.sampleDuration = analysisData.track.duration / this.sampleAmount
-    console.log(
-      `SAMPLING... Amount: ${this.sampleAmount}, Duration: ${this.sampleDuration}`
-    )
+    // console.log(
+    //   `SAMPLING... Amount: ${this.sampleAmount}, Duration: ${this.sampleDuration}`
+    // )
 
     this.sampleBlur = options.sampleBlur || 1
     this.fillBeatsStartDuration(analysisData.beats)
     this.calculateMaxMin()
-    console.log(`TimbreBiggest: ${this.timbreBiggest}`)
-    console.log(`TimbreTotalBiggest: ${this.timbreTotalBiggest}`)
+    // console.log(`TimbreBiggest: ${this.timbreBiggest}`)
+    // console.log(`TimbreTotalBiggest: ${this.timbreTotalBiggest}`)
 
     this.processSegments()
 
@@ -129,7 +129,7 @@ export default class Features {
       segmentedFeatures.push(smoothedFeatureSegment)
     })
 
-    console.log('Segmented Features: ', segmentedFeatures)
+    // console.log('Segmented Features: ', segmentedFeatures)
 
     const frankenFeatures = []
     segmentedFeatures.forEach((featureSegment) => {
@@ -252,9 +252,9 @@ export default class Features {
     )
     this.directLoudness = new Float32Array(this.directLoudnessAmount)
 
-    console.log(
-      `Process direct loudness. Duration: ${this.duration}, Segment Amount: ${this.segmentStartDuration.length}, Amount: ${this.directLoudnessAmount}`
-    )
+    // console.log(
+    //   `Process direct loudness. Duration: ${this.duration}, Segment Amount: ${this.segmentStartDuration.length}, Amount: ${this.directLoudnessAmount}`
+    // )
 
     let segmentIndex = 0
     for (let i = 0; i < this.directLoudnessAmount; i++) {
@@ -300,7 +300,7 @@ export default class Features {
       }
     })
 
-    console.log(`MAX LOUDNESS: ${this.maxLoudness}`)
+    // console.log(`MAX LOUDNESS: ${this.maxLoudness}`)
 
     this.processed.dynamics = this.processed.dynamics.map((dynamic) => {
       return (

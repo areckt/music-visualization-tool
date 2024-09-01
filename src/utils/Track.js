@@ -110,7 +110,7 @@ export default class Track {
   }
 
   process() {
-    console.log('Processing Track: ', this.getName())
+    // console.log('Processing Track: ', this.getName())
 
     this.features = new Features(this.analysisData, {
       samples: samples,
@@ -155,8 +155,8 @@ export default class Track {
       frankenFeatures.push(...featureSegment)
     })
     this.smoothedTimbre = frankenFeatures
-    console.log('Features processed')
-    console.log('this.features', this.features)
+    // console.log('Features processed')
+    // console.log('this.features', this.features)
 
     this.computeHarmonicStructure()
     this.computeTimbreStructure()
@@ -175,7 +175,7 @@ export default class Track {
       tempoRatios,
     })
 
-    console.log('Final harmonicStructure: ', result.harmonicStructure)
+    // console.log('Final harmonicStructure: ', result.harmonicStructure)
     this.harmonicStructureCourse = result.harmonicStructure
     this.setHarmonicStructure(this.harmonicStructureCourse)
 
@@ -194,7 +194,7 @@ export default class Track {
       this.features.sampleDuration
     )
 
-    console.log('Final timbre structure: ', result)
+    // console.log('Final timbre structure: ', result)
     this.timbreStructure = result.timbreStructure
     this.events = result.events
     this.segmentedTimbreGraph = result.segmentedTimbreGraph
@@ -220,7 +220,7 @@ export default class Track {
       this.features.fastSampleDuration
     )
 
-    console.log('Final chords structure: ', result)
+    // console.log('Final chords structure: ', result)
     this.chordsVector = result.chordsVector
     this.chords = result.chords
     this.key = result.key

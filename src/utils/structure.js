@@ -1157,16 +1157,16 @@ export function MDSIntuitionFlip(coloredSamples, timbreFeatures) {
     timbreFeatures.map((val) => val[3])
   )
 
-  console.log(
-    'MDSIntuitionFlip\nloudness',
-    loudness,
-    'darkness',
-    darkness,
-    'mids',
-    mids,
-    'attack',
-    attack
-  )
+  // console.log(
+  //   'MDSIntuitionFlip\nloudness',
+  //   loudness,
+  //   'darkness',
+  //   darkness,
+  //   'mids',
+  //   mids,
+  //   'attack',
+  //   attack
+  // )
 
   if (Math.sign(loudness) < 0) {
     return coloredSamples
