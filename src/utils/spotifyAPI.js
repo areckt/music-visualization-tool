@@ -42,11 +42,39 @@ export async function getAccessToken(code) {
       localStorage.removeItem('verifier')
       throw new Error('Failed to fetch access token')
     }
-    const { access_token } = await result.json()
+    const { access_token, refresh_token, expires_in } = await result.json()
+    localStorage.setItem('refresh_token', refresh_token)
+    setTimeout(getRefreshToken, expires_in * 1000 * 0.9)
     return access_token
   } catch (error) {
     console.error(error)
     window.location = '/'
+  }
+}
+
+const getRefreshToken = async () => {
+  // refresh token that has been previously stored
+  const refreshToken = localStorage.getItem('refresh_token')
+  const url = 'https://accounts.spotify.com/api/token'
+
+  const payload = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+      client_id: clientId,
+    }),
+  }
+  const body = await fetch(url, payload)
+  const response = await body.json()
+
+  localStorage.setItem('access_token', response.accessToken)
+  if (response.refreshToken && response.expires_in) {
+    localStorage.setItem('refresh_token', response.refreshToken)
+    setTimeout(getRefreshToken, response.expires_in * 1000 * 0.9)
   }
 }
 
