@@ -10,6 +10,14 @@ const getRedirectUri = () => {
   }
 }
 
+const getBaseUri = () => {
+  if (import.meta.env.DEV) {
+    return '/'
+  } else {
+    return '/music-visualization-tool/'
+  }
+}
+
 export async function redirectToAuthCodeFlow() {
   const verifier = generateCodeVerifier(128)
   const challenge = await generateCodeChallenge(verifier)
@@ -56,7 +64,7 @@ export async function getAccessToken(code) {
     return access_token
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
 
@@ -99,7 +107,7 @@ export async function fetchProfile(token) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
 
@@ -119,7 +127,7 @@ export async function fetchTracks(token, searchQuery) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
 
@@ -136,7 +144,7 @@ export async function fetchUserTopTracks(token) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
 
@@ -156,7 +164,7 @@ export async function fetchTrackAudioFeatures(token, trackId) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
 
@@ -176,6 +184,6 @@ export async function fetchTrackAudioAnalysis(token, trackId) {
     return await result.json()
   } catch (error) {
     console.error(error)
-    window.location = '/'
+    window.location = getBaseUri()
   }
 }
