@@ -2,6 +2,14 @@ import { generateCodeVerifier, generateCodeChallenge } from './utils'
 
 const clientId = 'c1daea0e75e94a118efba6aad50a9177'
 
+const getRedirectUri = () => {
+  if (import.meta.env.DEV) {
+    return 'http://localhost:5173/callback'
+  } else {
+    return 'https://areckt.github.io/music-visualization-tool/callback'
+  }
+}
+
 export async function redirectToAuthCodeFlow() {
   const verifier = generateCodeVerifier(128)
   const challenge = await generateCodeChallenge(verifier)
@@ -11,7 +19,7 @@ export async function redirectToAuthCodeFlow() {
   const params = new URLSearchParams()
   params.append('client_id', clientId)
   params.append('response_type', 'code')
-  params.append('redirect_uri', 'http://localhost:5173/callback')
+  params.append('redirect_uri', getRedirectUri())
   params.append(
     'scope',
     'streaming user-read-private user-read-email user-top-read user-read-playback-state user-modify-playback-state'
@@ -29,7 +37,7 @@ export async function getAccessToken(code) {
   params.append('client_id', clientId)
   params.append('grant_type', 'authorization_code')
   params.append('code', code)
-  params.append('redirect_uri', 'http://localhost:5173/callback')
+  params.append('redirect_uri', getRedirectUri())
   params.append('code_verifier', verifier)
 
   try {

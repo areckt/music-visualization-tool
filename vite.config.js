@@ -8,4 +8,5 @@ export default defineConfig({
   worker: {
     plugins: () => [comlink()],
   },
+  base: '/music-visualization-tool/',
 })
