@@ -38,7 +38,12 @@ export function toggleTheme() {
 export function logout() {
   localStorage.removeItem('verifier')
   localStorage.removeItem('accessToken')
-  window.location = '/'
+  localStorage.removeItem('refreshToken')
+  if (import.meta.env.DEV) {
+    window.location = '/'
+  } else {
+    window.location = '/music-visualization-tool/'
+  }
 }
 
 export function mapTracks(tracks) {
