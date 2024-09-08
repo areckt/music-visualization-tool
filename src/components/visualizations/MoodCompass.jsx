@@ -74,8 +74,16 @@ const MoodCompassStyled = styled.div`
   display: flex;
   gap: 1rem;
 
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+
   .description {
     max-width: 40ch;
+
+    @media (max-width: 1024px) {
+      max-width: max-content;
+    }
   }
 
   .chart-container {
@@ -83,6 +91,11 @@ const MoodCompassStyled = styled.div`
     width: 50%;
     margin: 2rem 2rem 2rem auto;
     aspect-ratio: 1;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin-top: 0;
+    }
 
     .gradient-energy {
       position: absolute;
