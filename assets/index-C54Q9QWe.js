@@ -475,8 +475,16 @@ Error generating stack: `+s.message+`
   display: flex;
   gap: 1rem;
 
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+
   .description {
     max-width: 40ch;
+
+    @media (max-width: 1024px) {
+      max-width: max-content;
+    }
   }
 
   .chart-container {
@@ -484,6 +492,11 @@ Error generating stack: `+s.message+`
     width: 50%;
     margin: 2rem 2rem 2rem auto;
     aspect-ratio: 1;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin-top: 0;
+    }
 
     .gradient-energy {
       position: absolute;
@@ -598,7 +611,7 @@ Error generating stack: `+s.message+`
     min-height: calc(4 * 200px);
     margin-bottom: 4rem;
   }
-`,b8=({token:e,trackId:t})=>{const{seeker:n,setSeeker:r}=yt(),i=N.useRef(null),[s,o]=N.useState(""),l=a=>{r(a.progressMs),clearInterval(i.current),a.isPlaying&&(i.current=setInterval(()=>{r(u=>u+50)},50))};return N.useEffect(()=>{ji.seek(e,0),r(0),o(`spotify:track:${t}`)},[t]),g.jsx(C8,{className:"container",children:g.jsx(J6,{token:e,uris:s,callback:l,layout:"compact",hideCoverArt:!0,hideAttribution:!0})})},C8=fe.div`
+`,b8=({token:e,trackId:t})=>{const{seeker:n,setSeeker:r}=yt(),i=N.useRef(null),[s,o]=N.useState(""),l=a=>{r(a.progressMs),clearInterval(i.current),a.isPlaying&&(i.current=setInterval(()=>{r(u=>u+50)},50))};return N.useEffect(()=>{ji.seek(e,0),r(0),o(`spotify:track:${t}`)},[t]),g.jsx(C8,{className:"container",children:g.jsx(J6,{token:e,uris:s,callback:l,layout:"compact",hideCoverArt:!0,hideAttribution:!0,styles:{color:"var(--pico-background-color)"}})})},C8=fe.div`
   position: fixed;
   z-index: 999;
   bottom: 0;
