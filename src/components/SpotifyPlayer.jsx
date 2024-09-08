@@ -34,7 +34,7 @@ const SpotifyPlayer = ({ token, trackId }) => {
         layout="compact"
         hideCoverArt
         hideAttribution
-        styles={{ color: 'var(--pico-background-color)' }}
+        styles={{ color: 'var(--pico-primary-background)' }}
       />
     </SpotifyPlayerStyled>
   )
