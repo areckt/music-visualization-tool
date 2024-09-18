@@ -4,25 +4,50 @@ import { useEffect, useState, useRef } from 'react'
 import { useGlobalContext } from '../context'
 
 const SpotifyPlayer = ({ token, trackId }) => {
-  const { seeker, setSeeker } = useGlobalContext()
+  const { setSeeker } = useGlobalContext()
   const interval = useRef(null)
+  const pingInterval = useRef(null)
   const [uris, setUris] = useState('')
 
   const onUpdate = (state) => {
     setSeeker(state.progressMs)
-    // console.log('playback state: ', state)
+
     clearInterval(interval.current)
-    if (state.isPlaying) {
+    clearInterval(pingInterval.current)
+
+    if (state.isPlaying && state?.track?.id === trackId) {
       interval.current = setInterval(() => {
         setSeeker((v) => v + 50)
-      }, 50)
+      }, 49)
+
+      pingInterval.current = setInterval(() => {
+        spotifyApi.getPlaybackState(token).then((res) => {
+          if (!res || !res.progress_ms) {
+            return
+          }
+          setSeeker((v) => {
+            if (Math.abs(v - res.progress_ms) <= 1000) {
+              return res.progress_ms
+            } else {
+              return v - 100
+            }
+          })
+        })
+      }, 250)
     }
   }
 
   useEffect(() => {
-    spotifyApi.seek(token, 0)
-    setSeeker(0)
+    setTimeout(() => {
+      clearInterval(interval.current)
+      clearInterval(pingInterval.current)
+      setSeeker(0)
+    }, 1000)
     setUris(`spotify:track:${trackId}`)
+    return () => {
+      clearInterval(interval.current)
+      clearInterval(pingInterval.current)
+    }
   }, [trackId])
 
   return (
@@ -34,7 +59,7 @@ const SpotifyPlayer = ({ token, trackId }) => {
         layout="compact"
         hideCoverArt
         hideAttribution
-        styles={{ color: 'var(--pico-primary-background)' }}
+        styles={{ color: '#0172ad' }}
       />
     </SpotifyPlayerStyled>
   )
