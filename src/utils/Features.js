@@ -136,7 +136,6 @@ export default class Features {
       frankenFeatures.push(...featureSegment)
     })
 
-    this.sampled.smoothedTimbre = segmentationSmoothedFeatures
     const medianFeatures = filter.medianFilterFeatures(this.sampled.timbres, 1)
 
     this.sampled.frankenFeatures = medianFeatures
@@ -287,7 +286,7 @@ export default class Features {
 
     this.sampled.smoothedAvgLoudness = filter.gaussianBlur1D(
       this.sampled.avgLoudness,
-      1
+      4
     )
 
     this.averageLoudness = 0

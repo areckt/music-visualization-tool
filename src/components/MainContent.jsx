@@ -14,6 +14,7 @@ import Tonality from './visualizations/Tonality'
 import SkeletonLoading from './SkeletonLoading'
 import styled from 'styled-components'
 import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
+import LoudnessGraph from './visualizations/LoudnessGraph'
 
 const MainContent = () => {
   const {
@@ -124,6 +125,16 @@ const MainContent = () => {
             width={width}
           />
         )}
+        {trackObject?.features?.sampled?.avgLoudness &&
+          trackObject?.features?.sampled?.smoothedAvgLoudness && (
+            <LoudnessGraph
+              avgLoudness={trackObject.features.sampled.avgLoudness}
+              smoothedAvgLoudness={
+                trackObject.features.sampled.smoothedAvgLoudness
+              }
+              width={width}
+            />
+          )}
       </article>
     </MainContentStyled>
   )

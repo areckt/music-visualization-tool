@@ -296,6 +296,7 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
           />
         </svg>
       </div> */}
+      <HorizontalSeparator />
     </TonalityStyled>
   )
 }

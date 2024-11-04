@@ -68,7 +68,6 @@ export default class Track {
 
   features
 
-  smoothedTimbre = []
   tsneCoords = []
   clusters = []
   clusterSections
@@ -154,7 +153,6 @@ export default class Track {
     segmentedFeatures.forEach((featureSegment) => {
       frankenFeatures.push(...featureSegment)
     })
-    this.smoothedTimbre = frankenFeatures
     // console.log('Features processed')
     // console.log('this.features', this.features)
 
@@ -195,7 +193,7 @@ export default class Track {
     )
 
     // console.log('Final timbre structure: ', result)
-    this.timbreStructure = result.timbreStructure
+    // this.timbreStructure = result.timbreStructure
     this.events = result.events
     this.segmentedTimbreGraph = result.segmentedTimbreGraph
     this.setTimbreStructure({

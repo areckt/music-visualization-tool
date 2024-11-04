@@ -13,7 +13,7 @@ const TimbreStructureSection = ({
   containerHeight,
 }) => {
   const GLOW_OPACITY = 0.4
-  const GLOW_SIZE = 6
+  const GLOW_SIZE = 3
   const GRADIENT_STEP_AMOUNT = 16
   const STROKE_WIDTH = 0.5
   const NO_LOUDNESS_HEIGHT = 0.8
@@ -181,7 +181,7 @@ const TimbreStructureSection = ({
       </defs>
       <rect
         className="glowRect"
-        fill={`url(#sectionGradient${section.start}${section.end})`}
+        fill={`url(#glowRectGradient${section.start}${section.end})`}
         x={x}
         y={currentY - (seekerIsInSection ? glowRectSize() / 2 : 0)}
         width={width}
@@ -218,7 +218,8 @@ const TimbreStructureSectionStyled = styled.g`
   .glowRect {
     z-index: -1;
     pointer-events: none;
+    transition-property: all;
     transition-timing-function: linear;
-    transition: 0.5s;
+    transition-duration: 0.5s;
   }
 `
