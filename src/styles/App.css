@@ -59,9 +59,12 @@
   font-size: inherit;
 }
 
-._ControlsRSWP .rswp__devices,
-._ControlsRSWP .rswp__volume {
+._ControlsRSWP .rswp__devices {
   display: none;
+}
+
+._ControlsRSWP .rswp__volume {
+  margin-right: 1.5rem;
 }
 
 .rswp_progress {

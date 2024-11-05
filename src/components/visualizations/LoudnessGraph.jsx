@@ -58,7 +58,7 @@ const LoudnessGraph = ({
 }) => {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
-  const [selectedData, setSelectedData] = useState('avgLoudness')
+  const [selectedData, setSelectedData] = useState('smoothedAvgLoudness')
   const [tooltip, setTooltip] = useState({
     show: false,
     x: 0,
@@ -196,6 +196,7 @@ const LoudnessGraph = ({
 
   return (
     <Container>
+      <h4>Loudness and Tempo</h4>
       <Select
         value={selectedData}
         onChange={(e) => setSelectedData(e.target.value)}

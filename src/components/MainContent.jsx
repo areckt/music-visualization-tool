@@ -15,6 +15,7 @@ import SkeletonLoading from './SkeletonLoading'
 import styled from 'styled-components'
 import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
 import LoudnessGraph from './visualizations/LoudnessGraph'
+import TempoGraph from './visualizations/TempoGraph'
 
 const MainContent = () => {
   const {
@@ -135,6 +136,13 @@ const MainContent = () => {
               width={width}
             />
           )}
+        {trackObject && trackAudioAnalysis && trackAudioFeatures && (
+          <TempoGraph
+            songDuration={trackAudioFeatures.duration_ms / 1000}
+            beats={trackAudioAnalysis.beats}
+            width={width}
+          />
+        )}
       </article>
     </MainContentStyled>
   )
