@@ -32,7 +32,6 @@ const allPitches = false
 export default class Track {
   eventListenerSet = false
 
-  trackData = null
   analysisData = null
   groundTruth = null
 
@@ -83,7 +82,6 @@ export default class Track {
   setChordsFeaturesLoading
 
   constructor(
-    trackData,
     analysisData,
     setHarmonicStructure,
     setTimbreStructure,
@@ -92,7 +90,6 @@ export default class Track {
     setTimbreStructureLoading,
     setChordsFeaturesLoading
   ) {
-    this.trackData = trackData
     this.analysisData = analysisData
 
     // visualization data setters
@@ -242,9 +239,6 @@ export default class Track {
   }
 
   // GETTERS
-  getName() {
-    return this.trackData.name
-  }
   getAnalysisDuration() {
     return this.analysisData.track.duration
   }

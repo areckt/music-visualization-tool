@@ -110,7 +110,6 @@ const TempoGraph = ({ songDuration = 0, beats = [], width = 1 }) => {
       })
 
       const canv_height = Math.max(Math.min((maxBpm - minBpm) * 10, 300), 40)
-      console.log('canv_height: ', canv_height)
       setCanvasHeight(canv_height)
 
       return smoothedPoints
@@ -177,8 +176,6 @@ const TempoGraph = ({ songDuration = 0, beats = [], width = 1 }) => {
   }
 
   useEffect(() => {
-    console.log('CANVAS HEIGHT: ', canvasHeight)
-
     const canvas = canvasRef.current
     // Set canvas dimensions based on container size
     const updateCanvasSize = () => {

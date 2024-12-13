@@ -10,6 +10,7 @@ const HarmonicStructureSection = ({
   verticalOffset,
   showLoudness,
   coloring,
+  audioPlayerRef,
 }) => {
   const GLOW_OPACITY = 0.4
   const GLOW_SIZE = 6
@@ -24,9 +25,12 @@ const HarmonicStructureSection = ({
   const y = verticalOffset + section.groupID * height + verticalOffset
 
   const handleClick = () => {
-    const accessToken = localStorage.getItem('accessToken')
-    spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
-    setSeeker(section.start * 1000)
+    // const accessToken = localStorage.getItem('accessToken')
+    // spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
+    // setSeeker(section.start * 1000)
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setProgress(section.start)
+    }
   }
 
   const calcColor = () => {

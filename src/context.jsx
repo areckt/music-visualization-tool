@@ -6,7 +6,6 @@ export const useGlobalContext = () => useContext(GlobalContext)
 
 const AppContext = ({ children }) => {
   const [selectedTrackId, setSelectedTrackId] = useState('')
-  const [trackData, setTrackData] = useState()
   const [trackObject, setTrackObject] = useState()
   const [harmonicStructure, setHarmonicStructure] = useState()
   const [timbreStructure, setTimbreStructure] = useState()
@@ -18,8 +17,6 @@ const AppContext = ({ children }) => {
       value={{
         selectedTrackId,
         setSelectedTrackId,
-        trackData,
-        setTrackData,
         trackObject,
         setTrackObject,
         harmonicStructure,

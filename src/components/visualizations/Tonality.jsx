@@ -8,7 +8,6 @@ import Seeker from './Seeker'
 
 const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
   const SECTION_HEIGHT = 20
-  const CIRCLE_OF_FIFTHS_SIZE = 300
   const HEIGHT = SECTION_HEIGHT * 2 + 4
 
   const [circleCollapsed, setCircleCollapsed] = useState(true)
@@ -33,8 +32,6 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
 
   let currentAngle = accumulativeAngle[currentFastSample]
   let currentAngleSlow = accumulativeAngleSlow[currentFastSample]
-
-  const circleOfFifths = audioUtil.circleOfFifths
 
   let currentKey = keyFeature[currentFastSample]
 
@@ -112,10 +109,6 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
     return vis.circleOfFifthsColor(angle % 1, saturation, opacity)
   }
 
-  function keyName(keyNumber) {
-    return audioUtil.keyNames[keyNumber]
-  }
-
   useEffect(() => {
     setupCanvas()
   }, [width])
@@ -158,15 +151,14 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
           This visualization shows the song's tonality change over time.
           Similarly to the chords, the colors correspond to the circle of
           fifths.
-          {/* <span>
-            The{' '}
+          {/* The{' '}
           <span className="material-icons">
             {circleCollapsed ? 'horizontal_rule' : 'density_medium'}
           </span>{' '}
           button toggles visibility of the circle of fifths with keys and their
-          corresponding colors. A real-time, fast and slow pointers show the
-          detected key for a given moment.
-            </span> */}
+          corresponding colors.
+          A real-time, fast and slow pointers show the
+          detected key for a given moment. */}
         </p>
       </div>
 
@@ -180,122 +172,6 @@ const Tonality = ({ tonality, tonalitySlow, keyFeature, width }) => {
         onClick={handleClickCanvas}
       ></canvas>
 
-      {/* <div
-        style={{
-          height: circleCollapsed ? '0px' : CIRCLE_OF_FIFTHS_SIZE + 'px',
-        }}
-        className="circleOfFifthsTonality"
-      >
-        <svg
-          className="tonalitySVG"
-          width={CIRCLE_OF_FIFTHS_SIZE}
-          height={circleCollapsed ? '0px' : CIRCLE_OF_FIFTHS_SIZE + 'px'}
-        >
-          <circle
-            cx={CIRCLE_OF_FIFTHS_SIZE / 2}
-            cy={CIRCLE_OF_FIFTHS_SIZE / 2}
-            r={CIRCLE_OF_FIFTHS_SIZE / 2}
-            fill="var(--pico-card-background-color)"
-          ></circle>
-          <g
-            transform={`translate(${CIRCLE_OF_FIFTHS_SIZE / 2},${
-              CIRCLE_OF_FIFTHS_SIZE / 2
-            })`}
-            stroke="var(--pico-background-color)"
-            strokeWidth="2"
-          >
-            {circleOfFifths.map((keyNumber, index) => (
-              <path
-                key={'circleOfFifths' + index}
-                d={`M 0 0 0 -${CIRCLE_OF_FIFTHS_SIZE / 2} A ${
-                  CIRCLE_OF_FIFTHS_SIZE / 2
-                } ${CIRCLE_OF_FIFTHS_SIZE / 2} 0 0 1 ${
-                  (Math.sin((1 / 12) * Math.PI * 2) * CIRCLE_OF_FIFTHS_SIZE) / 2
-                } ${
-                  -(Math.cos((1 / 12) * Math.PI * 2) * CIRCLE_OF_FIFTHS_SIZE) /
-                  2
-                } Z`}
-                transform={`rotate(${((-index - 0.5) / 12) * 360} 0 0)`}
-                fill={color(1 - index / 12, 1, 0.9)}
-              />
-            ))}
-            <circle
-              r={(CIRCLE_OF_FIFTHS_SIZE / 2) * 0.58}
-              fill="var(--pico-card-background-color)"
-            ></circle>
-            <circle
-              r={(CIRCLE_OF_FIFTHS_SIZE / 2) * 0.8}
-              fill="none"
-              stroke="var(--pico-background-color)"
-              strokeWidth="2"
-            ></circle>
-            {circleOfFifths.map((keyNumber, index) => (
-              <text
-                key={'circleOfFifthsText' + index}
-                x={
-                  (Math.sin((index / 12) * Math.PI * 2) *
-                    CIRCLE_OF_FIFTHS_SIZE *
-                    0.9) /
-                  2
-                }
-                y={
-                  -(
-                    Math.cos((index / 12) * Math.PI * 2) *
-                    CIRCLE_OF_FIFTHS_SIZE *
-                    0.9
-                  ) / 2
-                }
-                className="co5text"
-                textAnchor="middle"
-                alignmentBaseline="middle"
-              >
-                {keyName(keyNumber)}
-              </text>
-            ))}
-            {circleOfFifths.map((keyNumber, index) => (
-              <text
-                key={'circleOfFifthsTextM' + index}
-                x={
-                  (Math.sin(((index - 3) / 12) * Math.PI * 2) *
-                    CIRCLE_OF_FIFTHS_SIZE *
-                    0.7) /
-                  2
-                }
-                y={
-                  -(
-                    Math.cos(((index - 3) / 12) * Math.PI * 2) *
-                    CIRCLE_OF_FIFTHS_SIZE *
-                    0.7
-                  ) / 2
-                }
-                className="co5textm"
-                textAnchor="middle"
-                alignmentBaseline="middle"
-              >
-                {keyName(keyNumber + 12)}
-              </text>
-            ))}
-          </g>
-          <path
-            className="tonalityPointerSlow"
-            transform={`rotate(${currentAngleSlow * 360} ${
-              CIRCLE_OF_FIFTHS_SIZE / 2
-            } ${CIRCLE_OF_FIFTHS_SIZE / 2})`}
-            d={tonalityPointerPath(tonalitySlow)}
-            strokeWidth="4"
-            stroke={color(currentAngleSlow, 1, 1)}
-          />
-          <path
-            className="tonalityPointer"
-            transform={`rotate(${currentAngle * 360} ${
-              CIRCLE_OF_FIFTHS_SIZE / 2
-            } ${CIRCLE_OF_FIFTHS_SIZE / 2})`}
-            d={tonalityPointerPath(tonality)}
-            strokeWidth="4"
-            stroke={color(currentAngle)}
-          />
-        </svg>
-      </div> */}
       <HorizontalSeparator />
     </TonalityStyled>
   )
@@ -346,41 +222,6 @@ const TonalityStyled = styled.div`
     }
     &.showDescription {
       max-height: 9lh;
-    }
-  }
-
-  .circleOfFifthsTonality {
-    position: relative;
-    transition: 0.3s;
-
-    .tonalitySVG {
-      position: absolute;
-      transition: 0.5s;
-      top: 0;
-      left: 0;
-      z-index: 20;
-
-      .tonalityPointer {
-        transition: 0.15s;
-        z-index: 20;
-      }
-
-      .tonalityPointerSlow {
-        transition: 0.15s;
-        z-index: 20;
-      }
-      g {
-        .co5text {
-          font: 18px system-ui;
-          fill: white;
-          stroke: transparent;
-        }
-        .co5textm {
-          font: 12px system-ui;
-          fill: white;
-          stroke: transparent;
-        }
-      }
     }
   }
 `

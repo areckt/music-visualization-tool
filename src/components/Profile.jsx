@@ -1,17 +1,14 @@
 import styled from 'styled-components'
 import userAvatar from '../assets/user-avatar.png'
-import { logout, toggleTheme } from '../utils/utils'
+import { toggleTheme } from '../utils/utils'
 
-const Profile = ({ profile }) => {
-  const { display_name, images } = profile
-  const image = images.length ? images[0].url : userAvatar
-
+const Profile = () => {
   return (
     <ProfileStyled>
       <div className="profile">
-        <img src={image} alt={display_name} />
+        <img src={userAvatar} alt="User" />
         <p>
-          <b>{display_name}</b>
+          <b>Music Visualization Tool</b>
         </p>
       </div>
       <div className="buttons">
@@ -24,9 +21,6 @@ const Profile = ({ profile }) => {
             ☀️ / 🌙
           </button>
         </p>
-        <button className="outline secondary" onClick={logout}>
-          Logout
-        </button>
       </div>
     </ProfileStyled>
   )

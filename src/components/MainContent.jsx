@@ -16,11 +16,25 @@ import styled from 'styled-components'
 import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
 import LoudnessGraph from './visualizations/LoudnessGraph'
 import TempoGraph from './visualizations/TempoGraph'
+import totoAnalysis from '../audioAnalysisData/TOTO-Africa.json'
 
-const MainContent = () => {
+const AUDIO_FEATURES = {
+  toto: {
+    danceability: 0.67,
+    energy: 0.37,
+    loudness: -18,
+    tempo: 93,
+    valence: 0.73,
+  },
+}
+
+const AUDIO_ANALYSIS = {
+  toto: totoAnalysis,
+}
+
+const MainContent = ({ audioPlayerRef }) => {
   const {
     selectedTrackId,
-    trackData,
     trackObject,
     setTrackObject,
     harmonicStructure,
@@ -33,6 +47,8 @@ const MainContent = () => {
 
   const headerRef = useRef(null)
   const [width, setWidth] = useState(window.innerWidth)
+  const [audioFeatures, setAudioFeatures] = useState(null)
+  const [audioAnalysis, setAudioAnalysis] = useState(null)
 
   // loading states
   const [harmonicStructureLoading, setHarmonicStructureLoading] =
@@ -55,23 +71,29 @@ const MainContent = () => {
     }
   }, [])
 
-  const accessToken = localStorage.getItem('accessToken')
+  // const accessToken = localStorage.getItem('accessToken')
 
-  const { data: trackAudioFeatures, isLoading: isFeaturesLoading } = useQuery({
-    queryKey: ['trackAudioFeatures', selectedTrackId],
-    queryFn: () => fetchTrackAudioFeatures(accessToken, selectedTrackId),
-  })
+  // const { data: trackAudioFeatures, isLoading: isFeaturesLoading } = useQuery({
+  //   queryKey: ['trackAudioFeatures', selectedTrackId],
+  //   queryFn: () => fetchTrackAudioFeatures(accessToken, selectedTrackId),
+  // })
 
-  const { data: trackAudioAnalysis, isLoading: isAnalysisLoading } = useQuery({
-    queryKey: ['trackAudioAnalysis', selectedTrackId],
-    queryFn: () => fetchTrackAudioAnalysis(accessToken, selectedTrackId),
-  })
+  // const { data: trackAudioAnalysis, isLoading: isAnalysisLoading } = useQuery({
+  //   queryKey: ['trackAudioAnalysis', selectedTrackId],
+  //   queryFn: () => fetchTrackAudioAnalysis(accessToken, selectedTrackId),
+  // })
 
   useEffect(() => {
-    if (!isAnalysisLoading) {
+    if (selectedTrackId) {
+      setAudioFeatures(AUDIO_FEATURES[selectedTrackId])
+      setAudioAnalysis(AUDIO_ANALYSIS[selectedTrackId])
+    }
+  }, [selectedTrackId])
+
+  useEffect(() => {
+    if (audioAnalysis) {
       const track = new Track(
-        trackData,
-        trackAudioAnalysis,
+        audioAnalysis.analysis,
         setHarmonicStructure,
         setTimbreStructure,
         setChordsFeatures,
@@ -81,30 +103,22 @@ const MainContent = () => {
       )
       setTrackObject(track)
     }
-  }, [
-    isAnalysisLoading,
-    trackData,
-    trackAudioAnalysis,
-    isFeaturesLoading,
-    trackAudioFeatures,
-  ])
+  }, [audioAnalysis])
 
   return (
     <MainContentStyled className="container">
       <article>
         <h3 ref={headerRef}>Visualizations</h3>
 
-        {isFeaturesLoading ? (
-          <SkeletonLoading title="Audio Features Charts" />
-        ) : (
-          <>
-            <AudioFeaturesCharts audioFeatures={trackAudioFeatures} />
-          </>
-        )}
+        {audioFeatures && <AudioFeaturesCharts audioFeatures={audioFeatures} />}
 
         {harmonicStructureLoading && <SkeletonLoading title="Structure" />}
         {!harmonicStructureLoading && trackObject && harmonicStructure && (
-          <HarmonicStructure structure={harmonicStructure} width={width} />
+          <HarmonicStructure
+            structure={harmonicStructure}
+            width={width}
+            audioPlayerRef={audioPlayerRef}
+          />
         )}
 
         {timbreStructureLoading && <SkeletonLoading title="Timbre" />}
@@ -136,10 +150,10 @@ const MainContent = () => {
               width={width}
             />
           )}
-        {trackObject && trackAudioAnalysis && trackAudioFeatures && (
+        {trackObject && audioAnalysis && (
           <TempoGraph
-            songDuration={trackAudioFeatures.duration_ms / 1000}
-            beats={trackAudioAnalysis.beats}
+            songDuration={audioAnalysis.analysis.track.duration}
+            beats={audioAnalysis.analysis.beats}
             width={width}
           />
         )}

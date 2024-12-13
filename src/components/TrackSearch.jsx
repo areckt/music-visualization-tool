@@ -4,45 +4,53 @@ import { mapTracks } from '../utils/utils.js'
 import { useGlobalContext } from '../context.jsx'
 import styled from 'styled-components'
 
+const tracks = [
+  {
+    id: 'toto',
+    name: 'Africa',
+    image: 'public/images/toto-africa.jpg',
+    artists: 'TOTO',
+    duration: '4:55',
+  },
+]
+
 const TrackSearch = () => {
-  const [search, setSearch] = useState('')
-  const [tracks, setTracks] = useState([])
-  const { selectedTrackId, setSelectedTrackId, setTrackData, setSeeker } =
-    useGlobalContext()
+  // const [search, setSearch] = useState('')
+  // const [tracks, setTracks] = useState([])
+  const { selectedTrackId, setSelectedTrackId, setSeeker } = useGlobalContext()
 
-  const accessToken = localStorage.getItem('accessToken')
-  useEffect(() => {
-    ;(async () => {
-      const result = await fetchUserTopTracks(accessToken)
-      const tracks = mapTracks(result.items)
-      setTracks(tracks)
-    })()
+  // const accessToken = localStorage.getItem('accessToken')
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const result = await fetchUserTopTracks(accessToken)
+  //     const tracks = mapTracks(result.items)
+  //     setTracks(tracks)
+  //   })()
 
-    return () => {
-      setSelectedTrackId('')
-    }
-  }, [])
+  //   return () => {
+  //     setSelectedTrackId('')
+  //   }
+  // }, [])
 
-  const searchTracks = async (e) => {
-    e.preventDefault()
-    if (!search) return setTracks([])
+  // const searchTracks = async (e) => {
+  //   e.preventDefault()
+  //   if (!search) return setTracks([])
 
-    const result = await fetchTracks(accessToken, search)
-    const tracks = mapTracks(result.tracks.items)
-    setTracks(tracks)
-  }
+  //   const result = await fetchTracks(accessToken, search)
+  //   const tracks = mapTracks(result.tracks.items)
+  //   setTracks(tracks)
+  // }
 
   const handleSelectTrack = (track) => {
     // console.log(track)
-    setTrackData(track)
     setSelectedTrackId(track.id)
     setSeeker(0)
   }
 
   return (
     <TrackSearchStyled>
-      <h4>Search for a song</h4>
-      <form role="search" onSubmit={searchTracks}>
+      {/* <h4>Search for a song</h4> */}
+      {/* <form role="search" onSubmit={searchTracks}>
         <input
           type="search"
           placeholder="E.g. 'Never Gonna Give You Up', 'Bohemian Rhapsody'"
@@ -50,7 +58,7 @@ const TrackSearch = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <button type="submit">Search</button>
-      </form>
+      </form> */}
       <div className="track-list">
         {tracks.map((track) => (
           <div

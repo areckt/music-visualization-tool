@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../context'
 import HorizontalSeparator from '../HorizontalSeparator'
 import Seeker from './Seeker'
 
-const HarmonicStructure = ({ structure, width }) => {
+const HarmonicStructure = ({ structure, width, audioPlayerRef }) => {
   const SECTION_HEIGHT = 40
   const PADDING_TOP = 10
   const [showLoudness, setShowLoudness] = useState(true)
@@ -94,6 +94,7 @@ const HarmonicStructure = ({ structure, width }) => {
             verticalOffset={PADDING_TOP}
             showLoudness={showLoudness}
             coloring={catColoring ? 'categoricalMDS' : 'circular'}
+            audioPlayerRef={audioPlayerRef}
           />
         ))}
       </svg>

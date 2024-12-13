@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useGlobalContext } from '../../context'
 import * as vis from '../../utils/vis'
 import HorizontalSeparator from '../HorizontalSeparator'
+import * as audioUtil from '../../utils/audioUtil'
 import Seeker from './Seeker'
 import { spotifyApi } from 'react-spotify-web-playback'
 
@@ -11,9 +12,14 @@ const Chords = ({ chords, width }) => {
   const CHORD_NAME_HEIGHT = 30
   const MAX_CHORD_VIEW_DISTANCE = 15
   const CHORD_SCROLL_MIDDLE = 50
+  const CIRCLE_OF_FIFTHS_SIZE = 300
+
+  const [circleCollapsed, setCircleCollapsed] = useState(true)
 
   const [chordsCollapsed, setChordsCollapsed] = useState(false)
   const [showDescription, setShowDescription] = useState(false)
+
+  const circleOfFifths = audioUtil.circleOfFifths
 
   const canvasElement = useRef(null)
 
@@ -22,6 +28,10 @@ const Chords = ({ chords, width }) => {
   let height = BLOCK_HEIGHT * (chordsCollapsed ? 1 : 12)
 
   const scale = width / trackObject.getAnalysisDuration()
+
+  function keyName(keyNumber) {
+    return audioUtil.keyNames[keyNumber]
+  }
 
   const handleChordClick = (chord) => {
     const accessToken = localStorage.getItem('accessToken')
@@ -179,6 +189,11 @@ const Chords = ({ chords, width }) => {
     return vis.circleOfFifthsColor(chord.angle % 1, 1, confidence)
   }
 
+  function colorCircle(angle, saturation = 1.3, opacity = 1) {
+    if (angle < 0) angle += Math.abs(Math.floor(angle))
+    return vis.circleOfFifthsColor(angle % 1, saturation, opacity)
+  }
+
   function colorBrightness(chord, brightness) {
     return vis.circleOfFifthsColorBrightness(chord.angle % 1, 0.5, brightness)
   }
@@ -196,6 +211,20 @@ const Chords = ({ chords, width }) => {
       <div className="visualizationHeader">
         <h4>Chords</h4>
         <div className="buttons">
+          <span
+            role="button"
+            className={circleCollapsed ? 'off' : 'on'}
+            onMouseDown={() => setCircleCollapsed(!circleCollapsed)}
+            data-tooltip={
+              circleCollapsed
+                ? 'Circle of 5-ths is hidden'
+                : 'Circle of 5-ths is shown'
+            }
+          >
+            <span className="material-icons">
+              {circleCollapsed ? 'hide_source' : 'radio_button_checked'}
+            </span>
+          </span>
           <span
             role="button"
             className={chordsCollapsed ? 'off' : 'on'}
@@ -235,6 +264,130 @@ const Chords = ({ chords, width }) => {
           </span>{' '}
           button toggles chords display mode (single row / multiple rows).
         </p>
+        <p>
+          The{' '}
+          <span className="material-icons">
+            {circleCollapsed ? 'hide_source' : 'radio_button_checked'}
+          </span>{' '}
+          button toggles visibility of the circle of fifths with keys and their
+          corresponding colors.
+        </p>
+      </div>
+      <div
+        style={{
+          height: circleCollapsed ? '0px' : CIRCLE_OF_FIFTHS_SIZE + 'px',
+        }}
+        className="circleOfFifthsTonality"
+      >
+        <svg
+          className="tonalitySVG"
+          width={CIRCLE_OF_FIFTHS_SIZE}
+          height={circleCollapsed ? '0px' : CIRCLE_OF_FIFTHS_SIZE + 'px'}
+        >
+          <circle
+            cx={CIRCLE_OF_FIFTHS_SIZE / 2}
+            cy={CIRCLE_OF_FIFTHS_SIZE / 2}
+            r={CIRCLE_OF_FIFTHS_SIZE / 2}
+            fill="var(--pico-card-background-color)"
+          ></circle>
+          <g
+            transform={`translate(${CIRCLE_OF_FIFTHS_SIZE / 2},${
+              CIRCLE_OF_FIFTHS_SIZE / 2
+            })`}
+            stroke="var(--pico-background-color)"
+            strokeWidth="2"
+          >
+            {circleOfFifths.map((keyNumber, index) => (
+              <path
+                key={'circleOfFifths' + index}
+                d={`M 0 0 0 -${CIRCLE_OF_FIFTHS_SIZE / 2} A ${
+                  CIRCLE_OF_FIFTHS_SIZE / 2
+                } ${CIRCLE_OF_FIFTHS_SIZE / 2} 0 0 1 ${
+                  (Math.sin((1 / 12) * Math.PI * 2) * CIRCLE_OF_FIFTHS_SIZE) / 2
+                } ${
+                  -(Math.cos((1 / 12) * Math.PI * 2) * CIRCLE_OF_FIFTHS_SIZE) /
+                  2
+                } Z`}
+                transform={`rotate(${((-index - 0.5) / 12) * 360} 0 0)`}
+                fill={colorCircle(1 - index / 12, 1, 0.9)}
+              />
+            ))}
+            <circle
+              r={(CIRCLE_OF_FIFTHS_SIZE / 2) * 0.58}
+              fill="var(--pico-card-background-color)"
+            ></circle>
+            <circle
+              r={(CIRCLE_OF_FIFTHS_SIZE / 2) * 0.8}
+              fill="none"
+              stroke="var(--pico-background-color)"
+              strokeWidth="2"
+            ></circle>
+            {circleOfFifths.map((keyNumber, index) => (
+              <text
+                key={'circleOfFifthsText' + index}
+                x={
+                  (Math.sin((index / 12) * Math.PI * 2) *
+                    CIRCLE_OF_FIFTHS_SIZE *
+                    0.9) /
+                  2
+                }
+                y={
+                  -(
+                    Math.cos((index / 12) * Math.PI * 2) *
+                    CIRCLE_OF_FIFTHS_SIZE *
+                    0.9
+                  ) / 2
+                }
+                className="co5text"
+                textAnchor="middle"
+                alignmentBaseline="middle"
+              >
+                {keyName(keyNumber)}
+              </text>
+            ))}
+            {circleOfFifths.map((keyNumber, index) => (
+              <text
+                key={'circleOfFifthsTextM' + index}
+                x={
+                  (Math.sin(((index - 3) / 12) * Math.PI * 2) *
+                    CIRCLE_OF_FIFTHS_SIZE *
+                    0.7) /
+                  2
+                }
+                y={
+                  -(
+                    Math.cos(((index - 3) / 12) * Math.PI * 2) *
+                    CIRCLE_OF_FIFTHS_SIZE *
+                    0.7
+                  ) / 2
+                }
+                className="co5textm"
+                textAnchor="middle"
+                alignmentBaseline="middle"
+              >
+                {keyName(keyNumber + 12)}
+              </text>
+            ))}
+          </g>
+          {/* <path
+            className="tonalityPointerSlow"
+            transform={`rotate(${currentAngleSlow * 360} ${
+              CIRCLE_OF_FIFTHS_SIZE / 2
+            } ${CIRCLE_OF_FIFTHS_SIZE / 2})`}
+            d={tonalityPointerPath(tonalitySlow)}
+            strokeWidth="4"
+            stroke={color(currentAngleSlow, 1, 1)}
+          />
+          <path
+            className="tonalityPointer"
+            transform={`rotate(${currentAngle * 360} ${
+              CIRCLE_OF_FIFTHS_SIZE / 2
+            } ${CIRCLE_OF_FIFTHS_SIZE / 2})`}
+            d={tonalityPointerPath(tonality)}
+            strokeWidth="4"
+            stroke={color(currentAngle)}
+          /> */}
+        </svg>
       </div>
       <Seeker width={width} height={height} />
       <svg className="chordsSVG" width={width} height={height}>
@@ -382,6 +535,40 @@ const ChordsStyled = styled.div`
       cursor: pointer;
       &:hover {
         fill: var(--pico-contrast-hover) !important;
+      }
+    }
+  }
+  .circleOfFifthsTonality {
+    position: relative;
+    transition: 0.3s;
+
+    .tonalitySVG {
+      position: absolute;
+      transition: 0.5s;
+      top: 0;
+      left: 0;
+      z-index: 20;
+
+      .tonalityPointer {
+        transition: 0.15s;
+        z-index: 20;
+      }
+
+      .tonalityPointerSlow {
+        transition: 0.15s;
+        z-index: 20;
+      }
+      g {
+        .co5text {
+          font: 18px system-ui;
+          fill: white;
+          stroke: transparent;
+        }
+        .co5textm {
+          font: 12px system-ui;
+          fill: white;
+          stroke: transparent;
+        }
       }
     }
   }
