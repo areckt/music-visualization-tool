@@ -11,6 +11,7 @@ const TimbreStructureSection = ({
   showLoudness,
   verticalOffset,
   containerHeight,
+  audioPlayerRef,
 }) => {
   const GLOW_OPACITY = 0.4
   const GLOW_SIZE = 3
@@ -24,9 +25,12 @@ const TimbreStructureSection = ({
     seeker / 1000 >= section.start && seeker / 1000 < section.end
 
   const handleClick = () => {
-    const accessToken = localStorage.getItem('accessToken')
-    spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
-    setSeeker(section.start * 1000)
+    // const accessToken = localStorage.getItem('accessToken')
+    // spotifyApi.seek(accessToken, Math.floor(section.start * 1000))
+    // setSeeker(section.start * 1000)
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setProgress(section.start)
+    }
   }
 
   const verticalPosition = section.mdsFeature * (containerHeight - height)

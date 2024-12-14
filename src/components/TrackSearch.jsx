@@ -12,6 +12,27 @@ const tracks = [
     artists: 'TOTO',
     duration: '4:55',
   },
+  {
+    id: 'arcticMonkeys',
+    name: 'I Wanna Be Yours',
+    image: 'public/images/arctic-monkeys-i-wanna-be-yours.jpg',
+    artists: 'Arctic Monkeys',
+    duration: '3:03',
+  },
+  {
+    id: 'sabrina',
+    name: 'Espresso',
+    image: 'public/images/sabrina-carpenter-espresso.jpg',
+    artists: 'Sabrina Carpenter',
+    duration: '2:55',
+  },
+  {
+    id: 'rick',
+    name: 'Never Gonna Give You Up',
+    image: 'public/images/rick.jpg',
+    artists: 'Rick Astley',
+    duration: '3:33',
+  },
 ]
 
 const TrackSearch = () => {

@@ -17,6 +17,9 @@ import AudioFeaturesCharts from './visualizations/AudioFeaturesCharts'
 import LoudnessGraph from './visualizations/LoudnessGraph'
 import TempoGraph from './visualizations/TempoGraph'
 import totoAnalysis from '../audioAnalysisData/TOTO-Africa.json'
+import arcticMonkeysAnalysis from '../audioAnalysisData/ArcticMonkeys-IWannaBeYours.json'
+import sabrinaAnalysis from '../audioAnalysisData/SabrinaCarpenter-Espresso.json'
+import rickAnalysis from '../audioAnalysisData/RickAstley-NeverGonnaGiveYouUp.json'
 
 const AUDIO_FEATURES = {
   toto: {
@@ -26,10 +29,34 @@ const AUDIO_FEATURES = {
     tempo: 93,
     valence: 0.73,
   },
+  arcticMonkeys: {
+    danceability: 0.27,
+    energy: 0.12,
+    loudness: -12,
+    tempo: 67,
+    valence: 0.45,
+  },
+  sabrina: {
+    danceability: 0.82,
+    energy: 0.79,
+    loudness: -7,
+    tempo: 104,
+    valence: 0.68,
+  },
+  rick: {
+    danceability: 0.72,
+    energy: 0.94,
+    loudness: -12,
+    tempo: 113,
+    valence: 0.91,
+  },
 }
 
 const AUDIO_ANALYSIS = {
   toto: totoAnalysis,
+  arcticMonkeys: arcticMonkeysAnalysis,
+  sabrina: sabrinaAnalysis,
+  rick: rickAnalysis,
 }
 
 const MainContent = ({ audioPlayerRef }) => {
@@ -123,12 +150,20 @@ const MainContent = ({ audioPlayerRef }) => {
 
         {timbreStructureLoading && <SkeletonLoading title="Timbre" />}
         {!timbreStructureLoading && trackObject && timbreStructure && (
-          <TimbreStructure structure={timbreStructure} width={width} />
+          <TimbreStructure
+            structure={timbreStructure}
+            width={width}
+            audioPlayerRef={audioPlayerRef}
+          />
         )}
 
         {chordsFeaturesLoading && <SkeletonLoading title="Chords" />}
         {!chordsFeaturesLoading && trackObject && chordsFeatures && (
-          <Chords chords={chordsFeatures.chords} width={width} />
+          <Chords
+            chords={chordsFeatures.chords}
+            width={width}
+            audioPlayerRef={audioPlayerRef}
+          />
         )}
 
         {chordsFeaturesLoading && <SkeletonLoading title="Tonality" />}

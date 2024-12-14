@@ -7,7 +7,7 @@ import * as audioUtil from '../../utils/audioUtil'
 import Seeker from './Seeker'
 import { spotifyApi } from 'react-spotify-web-playback'
 
-const Chords = ({ chords, width }) => {
+const Chords = ({ chords, width, audioPlayerRef }) => {
   const BLOCK_HEIGHT = 15
   const CHORD_NAME_HEIGHT = 30
   const MAX_CHORD_VIEW_DISTANCE = 15
@@ -34,9 +34,12 @@ const Chords = ({ chords, width }) => {
   }
 
   const handleChordClick = (chord) => {
-    const accessToken = localStorage.getItem('accessToken')
-    spotifyApi.seek(accessToken, Math.floor(chord.start * 1000))
-    setSeeker(chord.start * 1000)
+    // const accessToken = localStorage.getItem('accessToken')
+    // spotifyApi.seek(accessToken, Math.floor(chord.start * 1000))
+    // setSeeker(chord.start * 1000)
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setProgress(chord.start)
+    }
   }
 
   const calculateChordGapOffset = () => {

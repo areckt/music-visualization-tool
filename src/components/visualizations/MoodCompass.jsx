@@ -89,6 +89,7 @@ const MoodCompassStyled = styled.div`
   .chart-container {
     position: relative;
     width: 50%;
+    max-width: 500px;
     margin: 2rem 2rem 2rem auto;
     aspect-ratio: 1;
 
@@ -187,7 +188,7 @@ const MoodCompassStyled = styled.div`
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      backdrop-filter: saturate(200%) contrast(200%) brightness(150%);
+      backdrop-filter: saturate(150%) contrast(150%) brightness(175%);
       transform-origin: 50% 50%;
       animation: pulse 2s ease-in-out infinite;
     }

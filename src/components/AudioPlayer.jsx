@@ -23,7 +23,7 @@ const PlayerContainer = styled.div`
 
 const Seeker = styled.div`
   width: 100%;
-  height: 4px;
+  height: 8px;
   background-color: var(--pico-muted-border-color);
   border-radius: 4px;
   cursor: pointer;
@@ -44,7 +44,7 @@ const SeekerHandle = styled.div`
   height: 16px;
   background-color: var(--pico-primary);
   border-radius: 50%;
-  top: -6px;
+  top: -4px;
   transform: translateX(-50%);
   left: ${(props) => props.$progress}%;
 `

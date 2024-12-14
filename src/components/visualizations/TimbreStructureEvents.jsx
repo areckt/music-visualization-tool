@@ -4,7 +4,7 @@ import * as vis from '../../utils/vis'
 import Seeker from './Seeker'
 import { spotifyApi } from 'react-spotify-web-playback'
 
-const TimbreStructureEvents = ({ width, events }) => {
+const TimbreStructureEvents = ({ width, events, audioPlayerRef }) => {
   const EVENT_SIZE = 6
   const EVENT_ACTIVE_SIZE = 9
   const HEIGHT = 100
@@ -14,9 +14,12 @@ const TimbreStructureEvents = ({ width, events }) => {
   const scale = width / trackObject.getAnalysisDuration()
 
   const handleClickEvent = (event) => {
-    const accessToken = localStorage.getItem('accessToken')
-    spotifyApi.seek(accessToken, Math.floor(event.time * 1000))
-    setSeeker((event.time - 0.2) * 1000)
+    // const accessToken = localStorage.getItem('accessToken')
+    // spotifyApi.seek(accessToken, Math.floor(event.time * 1000))
+    // setSeeker((event.time - 0.2) * 1000)
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.setProgress(event.time - 0.5)
+    }
   }
 
   const color = (element, confidence = 1) => {

@@ -7,7 +7,7 @@ import TimbreStructureEvents from './TimbreStructureEvents'
 import HorizontalSeparator from '../HorizontalSeparator'
 import Seeker from './Seeker'
 
-const TimbreStructure = ({ structure, width }) => {
+const TimbreStructure = ({ structure, width, audioPlayerRef }) => {
   const SECTION_HEIGHT = 45
   const PADDING_TOP = 10
   const GRADIENT_STEP_AMOUNT = 8
@@ -96,10 +96,15 @@ const TimbreStructure = ({ structure, width }) => {
             showLoudness={showLoudness}
             verticalOffset={PADDING_TOP}
             containerHeight={HEIGHT}
+            audioPlayerRef={audioPlayerRef}
           />
         ))}
       </svg>
-      <TimbreStructureEvents events={structure.events} width={width} />
+      <TimbreStructureEvents
+        events={structure.events}
+        width={width}
+        audioPlayerRef={audioPlayerRef}
+      />
       <HorizontalSeparator />
     </TimbreStructureStyled>
   )

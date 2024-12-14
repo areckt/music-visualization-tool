@@ -1,11 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
-import { getAccessToken, fetchProfile } from '../utils/spotifyAPI'
+// import { getAccessToken, fetchProfile } from '../utils/spotifyAPI'
 import Profile from './Profile'
 import TrackSearch from './TrackSearch'
 import { useGlobalContext } from '../context'
 import MainContent from './MainContent'
-import SpotifyPlayer from './SpotifyPlayer'
+// import SpotifyPlayer from './SpotifyPlayer'
 import AudioPlayer from './AudioPlayer'
+
+const AUDIO = {
+  toto: 'public/audio/toto-africa.mp3',
+  arcticMonkeys: 'public/audio/arctic-monkeys-i-wanna-be-yours.mp3',
+  sabrina: 'public/audio/sabrina-carpenter-espresso.mp3',
+  rick: 'public/audio/rick.mp3',
+}
 
 function Dashboard() {
   const { selectedTrackId } = useGlobalContext()
@@ -37,7 +44,7 @@ function Dashboard() {
       </header>
       <MainContent audioPlayerRef={audioPlayerRef} />
       {selectedTrackId && (
-        <AudioPlayer ref={audioPlayerRef} src="public/audio/toto-africa.mp3" />
+        <AudioPlayer ref={audioPlayerRef} src={AUDIO[selectedTrackId]} />
       )}
     </>
   )
