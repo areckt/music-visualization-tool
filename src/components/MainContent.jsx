@@ -20,6 +20,10 @@ import totoAnalysis from '../audioAnalysisData/TOTO-Africa.json'
 import arcticMonkeysAnalysis from '../audioAnalysisData/ArcticMonkeys-IWannaBeYours.json'
 import sabrinaAnalysis from '../audioAnalysisData/SabrinaCarpenter-Espresso.json'
 import rickAnalysis from '../audioAnalysisData/RickAstley-NeverGonnaGiveYouUp.json'
+import queenAnalysis from '../audioAnalysisData/Queen-BohemianRhapsody.json'
+import gangnamAnalysis from '../audioAnalysisData/PSY-GangnamStyle.json'
+import zacznijAnalysis from '../audioAnalysisData/zacznij-od-bacha.json'
+import tempestAnalysis from '../audioAnalysisData/pendulum-tempest.json'
 
 const AUDIO_FEATURES = {
   toto: {
@@ -50,6 +54,34 @@ const AUDIO_FEATURES = {
     tempo: 113,
     valence: 0.91,
   },
+  queen: {
+    danceability: 0.4,
+    energy: 0.39,
+    loudness: -10,
+    tempo: 144,
+    valence: 0.21,
+  },
+  gangnam: {
+    danceability: 0.73,
+    energy: 0.94,
+    loudness: -3,
+    tempo: 132,
+    valence: 0.76,
+  },
+  zacznij: {
+    danceability: 0.39,
+    energy: 0.6,
+    loudness: -8,
+    tempo: 103,
+    valence: 0.58,
+  },
+  tempest: {
+    danceability: 0.4,
+    energy: 0.75,
+    loudness: -8,
+    tempo: 174,
+    valence: 0.3,
+  },
 }
 
 const AUDIO_ANALYSIS = {
@@ -57,6 +89,10 @@ const AUDIO_ANALYSIS = {
   arcticMonkeys: arcticMonkeysAnalysis,
   sabrina: sabrinaAnalysis,
   rick: rickAnalysis,
+  queen: queenAnalysis,
+  gangnam: gangnamAnalysis,
+  zacznij: zacznijAnalysis,
+  tempest: tempestAnalysis,
 }
 
 const MainContent = ({ audioPlayerRef }) => {

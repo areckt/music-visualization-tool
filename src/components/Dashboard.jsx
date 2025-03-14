@@ -12,6 +12,10 @@ const AUDIO = {
   arcticMonkeys: 'public/audio/arctic-monkeys-i-wanna-be-yours.mp3',
   sabrina: 'public/audio/sabrina-carpenter-espresso.mp3',
   rick: 'public/audio/rick.mp3',
+  queen: 'public/audio/queen-bohemian-rhapsody.mp3',
+  gangnam: 'public/audio/gangnam-style.mp3',
+  zacznij: 'public/audio/zacznij-od-bacha.mp3',
+  tempest: 'public/audio/the-tempest.mp3',
 }
 
 function Dashboard() {

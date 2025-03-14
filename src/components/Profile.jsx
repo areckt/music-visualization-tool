@@ -33,7 +33,6 @@ const ProfileStyled = styled.article`
   .profile {
     display: flex;
     align-items: center;
-    max-width: min-content;
     img {
       width: 64px;
       height: 64px;

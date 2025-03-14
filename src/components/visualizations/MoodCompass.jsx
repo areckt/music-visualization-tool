@@ -22,7 +22,7 @@ const MoodCompass = ({ valence, energy, loudness, danceability, tempo }) => {
         <ul>
           <li>Valence: {valence.toFixed(2)}</li>
           <li>Energy: {energy.toFixed(2)}</li>
-          <li>Loudness: {loudness.toFixed(2)} dB</li>
+          <li>Loudness: {loudness.toFixed(2)} dBFS</li>
           <li>Danceability: {danceability.toFixed(2)}</li>
           <li>Tempo: {tempo.toFixed(0)} BPM</li>
         </ul>

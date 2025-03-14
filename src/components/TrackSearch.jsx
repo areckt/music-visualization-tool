@@ -33,6 +33,34 @@ const tracks = [
     artists: 'Rick Astley',
     duration: '3:33',
   },
+  {
+    id: 'queen',
+    name: 'Bohemian Rhapsody',
+    image: 'public/images/queen-bohemian-rhapsody.jpg',
+    artists: 'Queen',
+    duration: '5:55',
+  },
+  {
+    id: 'gangnam',
+    name: 'Gangnam Style',
+    image: 'public/images/gangnam-style.jpg',
+    artists: 'PSY',
+    duration: '3:39',
+  },
+  {
+    id: 'zacznij',
+    name: 'Zacznij od Bacha',
+    image: 'public/images/zacznij-od-bacha.jpg',
+    artists: 'Zbigniew Wodecki',
+    duration: '4:24',
+  },
+  {
+    id: 'tempest',
+    name: 'The Tempest',
+    image: 'public/images/tempest.jpg',
+    artists: 'Pendulum',
+    duration: '7:27',
+  },
 ]
 
 const TrackSearch = () => {
@@ -114,14 +142,14 @@ const TrackSearchStyled = styled.article`
       display: flex;
       flex-direction: column;
       padding: 0.25rem;
-      max-width: 6.5rem;
+      max-width: 7rem;
       border-radius: var(--pico-border-radius);
       cursor: pointer;
       transition: all 0.2s linear;
       img {
         transition: all 0.2s linear;
-        min-width: 6rem;
-        max-width: 6rem;
+        min-width: 6.5rem;
+        max-width: 6.5rem;
         border-radius: var(--pico-border-radius);
         border: var(--pico-border-width) solid var(--pico-secondary-border);
         aspect-ratio: 1;

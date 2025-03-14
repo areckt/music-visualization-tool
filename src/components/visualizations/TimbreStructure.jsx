@@ -100,11 +100,11 @@ const TimbreStructure = ({ structure, width, audioPlayerRef }) => {
           />
         ))}
       </svg>
-      <TimbreStructureEvents
+      {/* <TimbreStructureEvents
         events={structure.events}
         width={width}
         audioPlayerRef={audioPlayerRef}
-      />
+      /> */}
       <HorizontalSeparator />
     </TimbreStructureStyled>
   )

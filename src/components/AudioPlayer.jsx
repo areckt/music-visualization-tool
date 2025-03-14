@@ -135,6 +135,7 @@ const AudioPlayer = forwardRef(({ src }, ref) => {
         audioRef.current.currentTime = newTime
         setProgress(percentage)
         setCurrentTime(newTime)
+        setSeeker(audioRef.current.currentTime * 1000)
       }
     },
     // Method to play audio
